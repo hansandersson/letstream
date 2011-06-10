@@ -1,0 +1,331 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3A56FD7813A2296400B87EEC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A56FD7713A2296400B87EEC /* UIKit.framework */; };
+		3A56FD7A13A2296400B87EEC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A56FD7913A2296400B87EEC /* Foundation.framework */; };
+		3A56FD7C13A2296400B87EEC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A56FD7B13A2296400B87EEC /* CoreGraphics.framework */; };
+		3A56FD7E13A2296400B87EEC /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A56FD7D13A2296400B87EEC /* CoreData.framework */; };
+		3A56FD8413A2296400B87EEC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A56FD8213A2296400B87EEC /* InfoPlist.strings */; };
+		3A56FD8713A2296400B87EEC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A56FD8613A2296400B87EEC /* main.m */; };
+		3A56FD8A13A2296500B87EEC /* LetstreamAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A56FD8913A2296500B87EEC /* LetstreamAppDelegate.m */; };
+		3A56FD8D13A2296500B87EEC /* Letstream.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3A56FD8B13A2296500B87EEC /* Letstream.xcdatamodeld */; };
+		3A56FD9113A2296500B87EEC /* LetstreamAppDelegate_iPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A56FD9013A2296500B87EEC /* LetstreamAppDelegate_iPhone.m */; };
+		3A56FD9413A2296500B87EEC /* MainWindow_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A56FD9213A2296500B87EEC /* MainWindow_iPhone.xib */; };
+		3A56FD9813A2296500B87EEC /* LetstreamAppDelegate_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A56FD9713A2296500B87EEC /* LetstreamAppDelegate_iPad.m */; };
+		3A56FD9B13A2296500B87EEC /* MainWindow_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A56FD9913A2296500B87EEC /* MainWindow_iPad.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		3A56FD7313A2296400B87EEC /* Letstream.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Letstream.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A56FD7713A2296400B87EEC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		3A56FD7913A2296400B87EEC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		3A56FD7B13A2296400B87EEC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		3A56FD7D13A2296400B87EEC /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		3A56FD8113A2296400B87EEC /* Letstream-Info.plist */ = {isa = PBXFileReference; path = "Letstream-Info.plist"; sourceTree = "<group>"; };
+		3A56FD8313A2296400B87EEC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3A56FD8513A2296400B87EEC /* Letstream-Prefix.pch */ = {isa = PBXFileReference; path = "Letstream-Prefix.pch"; sourceTree = "<group>"; };
+		3A56FD8613A2296400B87EEC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		3A56FD8813A2296400B87EEC /* LetstreamAppDelegate.h */ = {isa = PBXFileReference; path = LetstreamAppDelegate.h; sourceTree = "<group>"; };
+		3A56FD8913A2296500B87EEC /* LetstreamAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LetstreamAppDelegate.m; sourceTree = "<group>"; };
+		3A56FD8C13A2296500B87EEC /* Letstream.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Letstream.xcdatamodel; sourceTree = "<group>"; };
+		3A56FD8F13A2296500B87EEC /* LetstreamAppDelegate_iPhone.h */ = {isa = PBXFileReference; name = LetstreamAppDelegate_iPhone.h; path = iPhone/LetstreamAppDelegate_iPhone.h; sourceTree = "<group>"; };
+		3A56FD9013A2296500B87EEC /* LetstreamAppDelegate_iPhone.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = LetstreamAppDelegate_iPhone.m; path = iPhone/LetstreamAppDelegate_iPhone.m; sourceTree = "<group>"; };
+		3A56FD9313A2296500B87EEC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = iPhone/en.lproj/MainWindow_iPhone.xib; sourceTree = "<group>"; };
+		3A56FD9613A2296500B87EEC /* LetstreamAppDelegate_iPad.h */ = {isa = PBXFileReference; name = LetstreamAppDelegate_iPad.h; path = iPad/LetstreamAppDelegate_iPad.h; sourceTree = "<group>"; };
+		3A56FD9713A2296500B87EEC /* LetstreamAppDelegate_iPad.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = LetstreamAppDelegate_iPad.m; path = iPad/LetstreamAppDelegate_iPad.m; sourceTree = "<group>"; };
+		3A56FD9A13A2296500B87EEC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = iPad/en.lproj/MainWindow_iPad.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3A56FD7013A2296400B87EEC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A56FD7813A2296400B87EEC /* UIKit.framework in Frameworks */,
+				3A56FD7A13A2296400B87EEC /* Foundation.framework in Frameworks */,
+				3A56FD7C13A2296400B87EEC /* CoreGraphics.framework in Frameworks */,
+				3A56FD7E13A2296400B87EEC /* CoreData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3A56FD6813A2296400B87EEC = {
+			isa = PBXGroup;
+			children = (
+				3A56FD7F13A2296400B87EEC /* Letstream */,
+				3A56FD7613A2296400B87EEC /* Frameworks */,
+				3A56FD7413A2296400B87EEC /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3A56FD7413A2296400B87EEC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3A56FD7313A2296400B87EEC /* Letstream.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3A56FD7613A2296400B87EEC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3A56FD7713A2296400B87EEC /* UIKit.framework */,
+				3A56FD7913A2296400B87EEC /* Foundation.framework */,
+				3A56FD7B13A2296400B87EEC /* CoreGraphics.framework */,
+				3A56FD7D13A2296400B87EEC /* CoreData.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3A56FD7F13A2296400B87EEC /* Letstream */ = {
+			isa = PBXGroup;
+			children = (
+				3A56FD8813A2296400B87EEC /* LetstreamAppDelegate.h */,
+				3A56FD8913A2296500B87EEC /* LetstreamAppDelegate.m */,
+				3A56FD8B13A2296500B87EEC /* Letstream.xcdatamodeld */,
+				3A56FD8E13A2296500B87EEC /* iPhone */,
+				3A56FD9513A2296500B87EEC /* iPad */,
+				3A56FD8013A2296400B87EEC /* Supporting Files */,
+			);
+			path = Letstream;
+			sourceTree = "<group>";
+		};
+		3A56FD8013A2296400B87EEC /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3A56FD8113A2296400B87EEC /* Letstream-Info.plist */,
+				3A56FD8213A2296400B87EEC /* InfoPlist.strings */,
+				3A56FD8513A2296400B87EEC /* Letstream-Prefix.pch */,
+				3A56FD8613A2296400B87EEC /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3A56FD8E13A2296500B87EEC /* iPhone */ = {
+			isa = PBXGroup;
+			children = (
+				3A56FD8F13A2296500B87EEC /* LetstreamAppDelegate_iPhone.h */,
+				3A56FD9013A2296500B87EEC /* LetstreamAppDelegate_iPhone.m */,
+				3A56FD9213A2296500B87EEC /* MainWindow_iPhone.xib */,
+			);
+			name = iPhone;
+			sourceTree = "<group>";
+		};
+		3A56FD9513A2296500B87EEC /* iPad */ = {
+			isa = PBXGroup;
+			children = (
+				3A56FD9613A2296500B87EEC /* LetstreamAppDelegate_iPad.h */,
+				3A56FD9713A2296500B87EEC /* LetstreamAppDelegate_iPad.m */,
+				3A56FD9913A2296500B87EEC /* MainWindow_iPad.xib */,
+			);
+			name = iPad;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3A56FD7213A2296400B87EEC /* Letstream */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3A56FD9E13A2296500B87EEC /* Build configuration list for PBXNativeTarget "Letstream" */;
+			buildPhases = (
+				3A56FD6F13A2296400B87EEC /* Sources */,
+				3A56FD7013A2296400B87EEC /* Frameworks */,
+				3A56FD7113A2296400B87EEC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Letstream;
+			productName = Letstream;
+			productReference = 3A56FD7313A2296400B87EEC /* Letstream.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3A56FD6A13A2296400B87EEC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = "Ultramentem & Vigorware";
+			};
+			buildConfigurationList = 3A56FD6D13A2296400B87EEC /* Build configuration list for PBXProject "Letstream" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 3A56FD6813A2296400B87EEC;
+			productRefGroup = 3A56FD7413A2296400B87EEC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3A56FD7213A2296400B87EEC /* Letstream */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3A56FD7113A2296400B87EEC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A56FD8413A2296400B87EEC /* InfoPlist.strings in Resources */,
+				3A56FD9413A2296500B87EEC /* MainWindow_iPhone.xib in Resources */,
+				3A56FD9B13A2296500B87EEC /* MainWindow_iPad.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3A56FD6F13A2296400B87EEC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A56FD8713A2296400B87EEC /* main.m in Sources */,
+				3A56FD8A13A2296500B87EEC /* LetstreamAppDelegate.m in Sources */,
+				3A56FD8D13A2296500B87EEC /* Letstream.xcdatamodeld in Sources */,
+				3A56FD9113A2296500B87EEC /* LetstreamAppDelegate_iPhone.m in Sources */,
+				3A56FD9813A2296500B87EEC /* LetstreamAppDelegate_iPad.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		3A56FD8213A2296400B87EEC /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3A56FD8313A2296400B87EEC /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		3A56FD9213A2296500B87EEC /* MainWindow_iPhone.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3A56FD9313A2296500B87EEC /* en */,
+			);
+			name = MainWindow_iPhone.xib;
+			sourceTree = "<group>";
+		};
+		3A56FD9913A2296500B87EEC /* MainWindow_iPad.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3A56FD9A13A2296500B87EEC /* en */,
+			);
+			name = MainWindow_iPad.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		3A56FD9C13A2296500B87EEC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3A56FD9D13A2296500B87EEC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		3A56FD9F13A2296500B87EEC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Letstream/Letstream-Prefix.pch";
+				INFOPLIST_FILE = "Letstream/Letstream-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		3A56FDA013A2296500B87EEC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Letstream/Letstream-Prefix.pch";
+				INFOPLIST_FILE = "Letstream/Letstream-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3A56FD6D13A2296400B87EEC /* Build configuration list for PBXProject "Letstream" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3A56FD9C13A2296500B87EEC /* Debug */,
+				3A56FD9D13A2296500B87EEC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3A56FD9E13A2296500B87EEC /* Build configuration list for PBXNativeTarget "Letstream" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3A56FD9F13A2296500B87EEC /* Debug */,
+				3A56FDA013A2296500B87EEC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		3A56FD8B13A2296500B87EEC /* Letstream.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				3A56FD8C13A2296500B87EEC /* Letstream.xcdatamodel */,
+			);
+			currentVersion = 3A56FD8C13A2296500B87EEC /* Letstream.xcdatamodel */;
+			path = Letstream.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 3A56FD6A13A2296400B87EEC /* Project object */;
+}
