@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A20ECCA13A24C85009BC127 /* BrowseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A20ECC813A24C85009BC127 /* BrowseTableViewController.m */; };
+		3A20ECCB13A24C85009BC127 /* BrowseTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A20ECC913A24C85009BC127 /* BrowseTableViewController.xib */; };
 		3A56FD7813A2296400B87EEC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A56FD7713A2296400B87EEC /* UIKit.framework */; };
 		3A56FD7A13A2296400B87EEC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A56FD7913A2296400B87EEC /* Foundation.framework */; };
 		3A56FD7C13A2296400B87EEC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A56FD7B13A2296400B87EEC /* CoreGraphics.framework */; };
@@ -22,22 +24,25 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3A20ECC713A24C85009BC127 /* BrowseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowseTableViewController.h; sourceTree = "<group>"; };
+		3A20ECC813A24C85009BC127 /* BrowseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowseTableViewController.m; sourceTree = "<group>"; };
+		3A20ECC913A24C85009BC127 /* BrowseTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowseTableViewController.xib; sourceTree = "<group>"; };
 		3A56FD7313A2296400B87EEC /* Letstream.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Letstream.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A56FD7713A2296400B87EEC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3A56FD7913A2296400B87EEC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3A56FD7B13A2296400B87EEC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		3A56FD7D13A2296400B87EEC /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		3A56FD8113A2296400B87EEC /* Letstream-Info.plist */ = {isa = PBXFileReference; path = "Letstream-Info.plist"; sourceTree = "<group>"; };
+		3A56FD8113A2296400B87EEC /* Letstream-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Letstream-Info.plist"; sourceTree = "<group>"; };
 		3A56FD8313A2296400B87EEC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		3A56FD8513A2296400B87EEC /* Letstream-Prefix.pch */ = {isa = PBXFileReference; path = "Letstream-Prefix.pch"; sourceTree = "<group>"; };
+		3A56FD8513A2296400B87EEC /* Letstream-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Letstream-Prefix.pch"; sourceTree = "<group>"; };
 		3A56FD8613A2296400B87EEC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		3A56FD8813A2296400B87EEC /* LetstreamAppDelegate.h */ = {isa = PBXFileReference; path = LetstreamAppDelegate.h; sourceTree = "<group>"; };
+		3A56FD8813A2296400B87EEC /* LetstreamAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LetstreamAppDelegate.h; sourceTree = "<group>"; };
 		3A56FD8913A2296500B87EEC /* LetstreamAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LetstreamAppDelegate.m; sourceTree = "<group>"; };
 		3A56FD8C13A2296500B87EEC /* Letstream.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Letstream.xcdatamodel; sourceTree = "<group>"; };
-		3A56FD8F13A2296500B87EEC /* LetstreamAppDelegate_iPhone.h */ = {isa = PBXFileReference; name = LetstreamAppDelegate_iPhone.h; path = iPhone/LetstreamAppDelegate_iPhone.h; sourceTree = "<group>"; };
+		3A56FD8F13A2296500B87EEC /* LetstreamAppDelegate_iPhone.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LetstreamAppDelegate_iPhone.h; path = iPhone/LetstreamAppDelegate_iPhone.h; sourceTree = "<group>"; };
 		3A56FD9013A2296500B87EEC /* LetstreamAppDelegate_iPhone.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = LetstreamAppDelegate_iPhone.m; path = iPhone/LetstreamAppDelegate_iPhone.m; sourceTree = "<group>"; };
 		3A56FD9313A2296500B87EEC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = iPhone/en.lproj/MainWindow_iPhone.xib; sourceTree = "<group>"; };
-		3A56FD9613A2296500B87EEC /* LetstreamAppDelegate_iPad.h */ = {isa = PBXFileReference; name = LetstreamAppDelegate_iPad.h; path = iPad/LetstreamAppDelegate_iPad.h; sourceTree = "<group>"; };
+		3A56FD9613A2296500B87EEC /* LetstreamAppDelegate_iPad.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LetstreamAppDelegate_iPad.h; path = iPad/LetstreamAppDelegate_iPad.h; sourceTree = "<group>"; };
 		3A56FD9713A2296500B87EEC /* LetstreamAppDelegate_iPad.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = LetstreamAppDelegate_iPad.m; path = iPad/LetstreamAppDelegate_iPad.m; sourceTree = "<group>"; };
 		3A56FD9A13A2296500B87EEC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = iPad/en.lproj/MainWindow_iPad.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -88,9 +93,12 @@
 		3A56FD7F13A2296400B87EEC /* Letstream */ = {
 			isa = PBXGroup;
 			children = (
+				3A56FD8B13A2296500B87EEC /* Letstream.xcdatamodeld */,
 				3A56FD8813A2296400B87EEC /* LetstreamAppDelegate.h */,
 				3A56FD8913A2296500B87EEC /* LetstreamAppDelegate.m */,
-				3A56FD8B13A2296500B87EEC /* Letstream.xcdatamodeld */,
+				3A20ECC713A24C85009BC127 /* BrowseTableViewController.h */,
+				3A20ECC813A24C85009BC127 /* BrowseTableViewController.m */,
+				3A20ECC913A24C85009BC127 /* BrowseTableViewController.xib */,
 				3A56FD8E13A2296500B87EEC /* iPhone */,
 				3A56FD9513A2296500B87EEC /* iPad */,
 				3A56FD8013A2296400B87EEC /* Supporting Files */,
@@ -182,6 +190,7 @@
 				3A56FD8413A2296400B87EEC /* InfoPlist.strings in Resources */,
 				3A56FD9413A2296500B87EEC /* MainWindow_iPhone.xib in Resources */,
 				3A56FD9B13A2296500B87EEC /* MainWindow_iPad.xib in Resources */,
+				3A20ECCB13A24C85009BC127 /* BrowseTableViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,6 +206,7 @@
 				3A56FD8D13A2296500B87EEC /* Letstream.xcdatamodeld in Sources */,
 				3A56FD9113A2296500B87EEC /* LetstreamAppDelegate_iPhone.m in Sources */,
 				3A56FD9813A2296500B87EEC /* LetstreamAppDelegate_iPad.m in Sources */,
+				3A20ECCA13A24C85009BC127 /* BrowseTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -235,12 +245,37 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_CHECK_RETURN_VALUE_OF_OPERATOR_NEW = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_STRICT_ALIASING = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_UNROLL_LOOPS = NO;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS = YES;
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = YES;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
+				GCC_WARN_PEDANTIC = NO;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_STRICT_SELECTOR_MATCH = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				SDKROOT = iphoneos;
@@ -253,9 +288,34 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_CHECK_RETURN_VALUE_OF_OPERATOR_NEW = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_STRICT_ALIASING = YES;
+				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_UNROLL_LOOPS = NO;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS = YES;
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = YES;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
+				GCC_WARN_PEDANTIC = NO;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_STRICT_SELECTOR_MATCH = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
@@ -311,6 +371,7 @@
 				3A56FDA013A2296500B87EEC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

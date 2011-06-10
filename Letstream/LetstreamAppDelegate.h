@@ -8,11 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LetstreamAppDelegate : NSObject <UIApplicationDelegate> {
-
-}
+@interface LetstreamAppDelegate : NSObject <UIApplicationDelegate> {}
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
+@property (nonatomic, retain) UITabBarController *tabBarController;
 
 @property (nonatomic, retain, readonly) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;

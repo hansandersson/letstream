@@ -10,6 +10,11 @@
 
 @implementation LetstreamAppDelegate_iPhone
 
+- (void)applicationDidFinishLaunching:(UIApplication *)application
+{
+	NSLog(@"iPhone applicationDidFinishLaunching");
+}
+
 - (void)dealloc
 {
 	[super dealloc];

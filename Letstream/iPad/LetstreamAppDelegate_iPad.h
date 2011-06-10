@@ -9,8 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "LetstreamAppDelegate.h"
 
-@interface LetstreamAppDelegate_iPad : LetstreamAppDelegate {
-    
-}
+@interface LetstreamAppDelegate_iPad : LetstreamAppDelegate {}
 
 @end
