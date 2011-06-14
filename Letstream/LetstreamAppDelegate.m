@@ -7,7 +7,7 @@
 //
 
 #import "LetstreamAppDelegate.h"
-#import "BrowseTableViewController.h"
+#import "SearchTableViewController.h"
 
 @implementation LetstreamAppDelegate
 
@@ -22,20 +22,23 @@
 	[self setTabBarController:[[[UITabBarController alloc] init] autorelease]];
 	
 	UINavigationController
-	*browseViewController = [[UINavigationController alloc] init],
-	*searchViewController = [[UINavigationController alloc] init];
+	*searchViewController = [[UINavigationController alloc] init],
+	*streamViewController = [[UINavigationController alloc] init],
+	*signalViewController = [[UINavigationController alloc] init];
 	
-	[browseViewController pushViewController:[[[BrowseTableViewController alloc] initWithNibName:@"BrowseTableViewController" bundle:[NSBundle mainBundle]] autorelease] animated:NO];
+	[searchViewController pushViewController:[[[SearchTableViewController alloc] initWithNibName:@"SearchTableViewController" bundle:[NSBundle mainBundle]] autorelease] animated:NO];
 	
 	[tabBarController setViewControllers:
 	 [NSArray arrayWithObjects:
-	  browseViewController,
 	  searchViewController,
+	  signalViewController,
+	  streamViewController,
 	  nil]
 	 ];
 	 
-	[browseViewController release];
 	[searchViewController release];
+	[streamViewController release];
+	[signalViewController release];
 	
 	
 	[window addSubview:[tabBarController view]];
