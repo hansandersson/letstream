@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AddressBook/AddressBook.h>
 
 @interface LetstreamAppDelegate : NSObject <UIApplicationDelegate> {}
 
@@ -16,6 +17,8 @@
 @property (nonatomic, retain, readonly) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, retain, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+
+- (void)updateAddressBookGroups;
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;

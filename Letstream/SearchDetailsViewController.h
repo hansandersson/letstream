@@ -11,8 +11,13 @@
 
 @interface SearchDetailsViewController : UITableViewController {}
 
-@property (readonly, retain) NSArray *sections;
-@property (readonly, retain) NSDictionary *sectionObjects;
+- (id)initWithRepresentedObject:(NSManagedObject *)initRepresentedObject;
+- (id)initWithManagedObjectContext:(NSManagedObjectContext *)initManagedObjectContext;
+
+@property (readonly) NSManagedObjectContext *managedObjectContext;
+@property (readonly) NSManagedObject *representedObject;
+@property (readonly) NSArray *sections;
+@property (readonly) NSDictionary *sectionObjects;
 
 - (IBAction)tappedAdder:(id)sender;
 

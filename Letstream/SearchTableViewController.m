@@ -7,7 +7,7 @@
 //
 
 #import "SearchTableViewController.h"
-
+#import "SearchDetailsViewController.h"
 
 @implementation SearchTableViewController
 
@@ -19,11 +19,11 @@
 	{
 		NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
 		[fetchRequest setEntity:[NSEntityDescription entityForName:@"Search" inManagedObjectContext:managedObjectContext]];
-		// NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
-		// NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
-		// [fetchRequest setSortDescriptors:sortDescriptors];
-		// [sortDescriptors release];
-		// [sortDescriptor release];
+		NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"hoursWithin" ascending:YES];
+		NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+		[fetchRequest setSortDescriptors:sortDescriptors];
+		[sortDescriptors release];
+		[sortDescriptor release];
  
 		fetchedResultsController = [[NSFetchedResultsController alloc]
         	initWithFetchRequest:fetchRequest
@@ -35,20 +35,9 @@
 	return fetchedResultsController;
 }
 
-- (id)initWithStyle:(UITableViewStyle)style managedObjectContext:(NSManagedObjectContext *)initManagedObjectContext
+- (id)initWithManagedObjectContext:(NSManagedObjectContext *)initManagedObjectContext
 {
-    if ((self = [super initWithStyle:style]))
-	{
-		managedObjectContext = initManagedObjectContext;
-		[[self managedObjectContext] retain];
-    }
-    return self;
-}
-
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil managedObjectContext:(NSManagedObjectContext *)initManagedObjectContext
-{
-	if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]))
+	if ((self = [super initWithNibName:@"SearchTableViewController" bundle:nil]))
 	{
 		managedObjectContext = initManagedObjectContext;
 		[[self managedObjectContext] retain];
@@ -72,13 +61,11 @@
 
 #pragma mark - View lifecycle
 
-- (void)setTitleDefault { [self setTitle:@"Search"]; }
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	[self setTitle:@"Search"];
-	[[self navigationItem] setLeftBarButtonItem:[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:nil] autorelease]];
+	[[self navigationItem] setLeftBarButtonItem:[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(newSearch:)] autorelease]];
 	[[self navigationItem] setRightBarButtonItem:[self editButtonItem]];
     [self setClearsSelectionOnViewWillAppear:NO];
 }
@@ -93,7 +80,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-	[self setTitleDefault];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -124,7 +110,7 @@
 	return [[[self fetchedResultsController] fetchedObjects] count];
 }
 
-- (Search *)objectForIndexPath:(NSIndexPath *)indexPath
+- (NSManagedObject *)objectForIndexPath:(NSIndexPath *)indexPath
 {
 	return [[[self fetchedResultsController] fetchedObjects] objectAtIndex:[indexPath row]];
 }
@@ -140,7 +126,7 @@
 		[cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
 	}
 	
-	[[cell textLabel] setText:[[self objectForIndexPath:indexPath] stringValue]];
+	[[cell textLabel] setText:@"Saved Search"];
 	
     return cell;
 }
@@ -188,8 +174,48 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-	
+	if ([self isEditing])
+	{
+		UIViewController *detailsViewController = [[SearchDetailsViewController alloc] initWithRepresentedObject:[self objectForIndexPath:indexPath]];
+		[detailsViewController setTitle:@"Edit Search…"];
+		[self presentDetailsViewController:detailsViewController];
+		[detailsViewController release];
+	}
+	else
+	{
+		//... present search results
+	}
+}
+
+- (IBAction)newSearch:(id)sender
+{
+	UIViewController *detailsViewController = [[SearchDetailsViewController alloc] initWithManagedObjectContext:[self managedObjectContext]];
+	[detailsViewController setTitle:@"New Search…"];
+	[self presentDetailsViewController:detailsViewController];
+	[detailsViewController release];
+}
+
+- (void)presentDetailsViewController:(UIViewController *)detailsViewController
+{
+	UINavigationController *detailsViewControllerContainer = [[UINavigationController alloc] init];
+	[detailsViewControllerContainer pushViewController:detailsViewController animated:NO];
+	[[detailsViewController navigationItem] setRightBarButtonItem:[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(detailsDone:)] autorelease]];
+	[[detailsViewController navigationItem] setLeftBarButtonItem:[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(detailsCancel:)] autorelease]];
+	[self presentModalViewController:detailsViewControllerContainer animated:YES];
+}
+
+- (IBAction)detailsDone:(id)sender
+{
+	UIViewController *detailsViewControllerContainer = [self modalViewController];
+	[self dismissModalViewControllerAnimated:YES];
+	[detailsViewControllerContainer release];
+}
+
+- (IBAction)detailsCancel:(id)sender
+{
+	UIViewController *detailsViewControllerContainer = [self modalViewController];
+	[self dismissModalViewControllerAnimated:YES];
+	[detailsViewControllerContainer release];
 }
 
 @end

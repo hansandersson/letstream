@@ -7,10 +7,12 @@
 //
 
 #import "SearchDetailsViewController.h"
-
+#import "LetstreamAppDelegate.h"
+#import "Record.h"
 
 @implementation SearchDetailsViewController
 
+@synthesize representedObject, managedObjectContext;
 @synthesize sections, sectionObjects;
 
 - (NSArray *)sections
@@ -30,20 +32,32 @@
 	return sectionObjects;
 }
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (id)initWithRepresentedObject:(NSManagedObject *)initRepresentedObject
 {
-    self = [super initWithStyle:style];
-    if (self)
+	if ((self = [self initWithManagedObjectContext:[initRepresentedObject managedObjectContext]]))
 	{
-		//...
+		representedObject = initRepresentedObject;
+		[representedObject retain];
+    }
+    return self;
+}
+
+- (id)initWithManagedObjectContext:(NSManagedObjectContext *)initManagedObjectContext
+{
+	if ((self = [super initWithNibName:@"SearchDetailsViewController" bundle:nil]))
+	{
+		managedObjectContext = initManagedObjectContext;
+		[managedObjectContext retain];
     }
     return self;
 }
 
 - (void)dealloc
 {
-	if (sections) [sections release];
-	if (sectionObjects) [sectionObjects release];
+	[sections release];
+	[sectionObjects release];
+	[representedObject release];
+	[managedObjectContext release];
     [super dealloc];
 }
 
@@ -57,12 +71,9 @@
 
 #pragma mark - View lifecycle
 
-- (void)setTitleDefault { [self setTitle:@"Search"]; }
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	[self setTitle:@"Search"];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -80,7 +91,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-	[self setTitleDefault];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -108,20 +118,55 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView { return [[self sections] count]; }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section { return [(NSArray *)[[self sectionObjects] objectForKey:[[self sections] objectAtIndex:section]] count] + 1; }
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+	if (section == (NSInteger) [[self sections] indexOfObject:@"Who"])
+	{
+		NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+		[fetchRequest setEntity:[NSEntityDescription entityForName:@"Group" inManagedObjectContext:managedObjectContext]];
+		NSUInteger count = [[managedObjectContext executeFetchRequest:fetchRequest error:nil] count];
+		[fetchRequest release];
+		return count + 1;
+	}
+	else if (section == (NSInteger) [[self sections] indexOfObject:@"What"]) return 1;
+	else if (section == (NSInteger) [[self sections] indexOfObject:@"Where"]) return 1;
+	else if (section == (NSInteger) [[self sections] indexOfObject:@"When"]) return 1;
+	
+	return 0;
+}
 
-- (NSString *)stringForIndexPath:(NSIndexPath *)indexPath { return [[[self sectionObjects] objectForKey:[[self sections] objectAtIndex:[indexPath section]]] objectAtIndex:[indexPath row]]; }
+- (NSString *)stringForIndexPath:(NSIndexPath *)indexPath
+{
+	if ([indexPath section] == [[self sections] indexOfObject:@"Who"])
+	{
+		NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+		[fetchRequest setEntity:[NSEntityDescription entityForName:@"Group" inManagedObjectContext:managedObjectContext]];
+		NSError *error = nil;
+		NSArray *groups = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
+		if (error) NSLog(@"%@", error);
+		[fetchRequest release];
+		
+		if ([indexPath row] == [groups count]) return @"Add…";
+		
+		return [(Record *)[groups objectAtIndex:[indexPath row]] name];
+	}
+	else if ([indexPath section] == [[self sections] indexOfObject:@"What"]) return @"What";
+	else if ([indexPath section] == [[self sections] indexOfObject:@"Where"]) return @"Where";
+	else if ([indexPath section] == [[self sections] indexOfObject:@"When"]) return @"When";
+	
+	return 0;
+}
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section { return [[self sections] objectAtIndex:section]; }
-
-- (BOOL)isAdderForIndexPath:(NSIndexPath *)indexPath { return !([indexPath row] < [[[self sectionObjects] objectForKey:[[self sections] objectAtIndex:[indexPath section]]] count]); }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	#define CELLTYPE_ADD @"SearchCellAdd"
 	#define CELLTYPE_DEFAULT @"SearchCellDefault"
 	
-	NSString *CELLTYPE = [self isAdderForIndexPath:indexPath] ? CELLTYPE_ADD : CELLTYPE_DEFAULT;
+	NSString *cellTextLabelStringValue = [self stringForIndexPath:indexPath];
+	
+	NSString *CELLTYPE = [cellTextLabelStringValue isEqualToString:@"Add…"] ? CELLTYPE_ADD : CELLTYPE_DEFAULT;
     
     UITableViewCell *cell;
     if (!(cell = [tableView dequeueReusableCellWithIdentifier:CELLTYPE]))
@@ -192,7 +237,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Navigation logic may go here. Create and push another view controller.
-	if ([self isAdderForIndexPath:indexPath]) [self tappedAdder:[[tableView cellForRowAtIndexPath:indexPath] accessoryView]];
+	if ([[[[tableView cellForRowAtIndexPath:indexPath] textLabel] text] isEqualToString:@"Add…"]) [self tappedAdder:[[tableView cellForRowAtIndexPath:indexPath] accessoryView]];
 }
 
 - (IBAction)tappedAdder:(id)sender

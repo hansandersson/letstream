@@ -26,7 +26,7 @@
 	*streamViewController = [[UINavigationController alloc] init],
 	*signalViewController = [[UINavigationController alloc] init];
 	
-	[searchViewController pushViewController:[[[SearchTableViewController alloc] initWithNibName:@"SearchTableViewController" bundle:[NSBundle mainBundle]] autorelease] animated:NO];
+	[searchViewController pushViewController:[[[SearchTableViewController alloc] initWithManagedObjectContext:[self managedObjectContext]] autorelease] animated:NO];
 	
 	[tabBarController setViewControllers:
 	 [NSArray arrayWithObjects:
@@ -46,7 +46,59 @@
 	
 	//Call subclasses
 	[self applicationDidFinishLaunching:application];
+	
+	[self updateAddressBookGroups];
+	
     return YES;
+}
+
+- (void)updateAddressBookGroups
+{
+	ABAddressBookRef addressBookRef = ABAddressBookCreate();
+	
+	NSArray *groupRefsExternal = (NSArray *)ABAddressBookCopyArrayOfAllGroups(addressBookRef);
+	
+	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+	[fetchRequest setEntity:[NSEntityDescription entityForName:@"Group" inManagedObjectContext:[self managedObjectContext]]];
+	NSError *error = nil;
+	NSArray *groupsInternal = (NSArray *)[[self managedObjectContext] executeFetchRequest:fetchRequest error:&error];
+	[fetchRequest release];
+	
+	if (error)
+	{
+		NSLog(@"%@", error);
+		return;
+	}
+	
+	NSArray *groupIDsInternal = [groupsInternal valueForKeyPath:@"identifier"];
+	NSMutableArray *groupIDsExternal = [[NSMutableArray alloc] initWithCapacity:[groupRefsExternal count]];
+	for (id groupRefExternal in groupRefsExternal)
+	{
+		NSNumber *groupID = [[NSNumber alloc] initWithInt:ABRecordGetRecordID((ABRecordRef)groupRefExternal)];
+		[groupIDsExternal addObject:groupID];
+		
+		if (![groupIDsInternal containsObject:groupID])
+		{
+			NSManagedObject *newGroup = [[NSManagedObject alloc] initWithEntity:[NSEntityDescription entityForName:@"Group" inManagedObjectContext:[self managedObjectContext]] insertIntoManagedObjectContext:[self managedObjectContext]];
+			NSLog(@"%@", groupID);
+			[newGroup setValue:groupID forKey:@"identifier"];
+			[newGroup release];
+		}
+		
+		[groupID release];
+	}
+	[groupRefsExternal release];
+	
+	for (NSManagedObject *groupInternal in groupsInternal)
+	{
+		if (![groupIDsExternal containsObject:[groupInternal valueForKey:@"identifier"]]) [[self managedObjectContext] deleteObject:groupInternal];
+	}
+	
+	[[self managedObjectContext] save:nil];
+	
+	if (ABAddressBookHasUnsavedChanges(addressBookRef)) ABAddressBookSave(addressBookRef, NULL);
+	
+	CFRelease(addressBookRef);
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

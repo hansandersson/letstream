@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		3A0A341F13A7A2E8007FFFFB /* SearchDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A0A341D13A7A2E7007FFFFB /* SearchDetailsViewController.m */; };
 		3A0A342013A7A2E8007FFFFB /* SearchDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A0A341E13A7A2E8007FFFFB /* SearchDetailsViewController.xib */; };
+		3A0A342713A7D3B7007FFFFB /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A0A342613A7D3B7007FFFFB /* AddressBook.framework */; };
+		3A0A342913A7D3BD007FFFFB /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A0A342813A7D3BD007FFFFB /* AddressBookUI.framework */; };
+		3A0A342C13A7F64F007FFFFB /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A0A342B13A7F64F007FFFFB /* Person.m */; };
+		3A0A343213A7F650007FFFFB /* Group.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A0A343113A7F650007FFFFB /* Group.m */; };
+		3A0A343613A7F766007FFFFB /* Record.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A0A343513A7F766007FFFFB /* Record.m */; };
 		3A20ECCA13A24C85009BC127 /* SearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A20ECC813A24C85009BC127 /* SearchTableViewController.m */; };
 		3A20ECCB13A24C85009BC127 /* SearchTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A20ECC913A24C85009BC127 /* SearchTableViewController.xib */; };
 		3A56FD7813A2296400B87EEC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A56FD7713A2296400B87EEC /* UIKit.framework */; };
@@ -26,9 +31,17 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3A0A341C13A7A2E7007FFFFB /* SearchDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lineEnding = 0; path = SearchDetailsViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		3A0A341C13A7A2E7007FFFFB /* SearchDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SearchDetailsViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A0A341D13A7A2E7007FFFFB /* SearchDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SearchDetailsViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A0A341E13A7A2E8007FFFFB /* SearchDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchDetailsViewController.xib; sourceTree = "<group>"; };
+		3A0A342613A7D3B7007FFFFB /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		3A0A342813A7D3BD007FFFFB /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		3A0A342A13A7F64F007FFFFB /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
+		3A0A342B13A7F64F007FFFFB /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
+		3A0A343013A7F650007FFFFB /* Group.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Group.h; sourceTree = "<group>"; };
+		3A0A343113A7F650007FFFFB /* Group.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Group.m; sourceTree = "<group>"; };
+		3A0A343413A7F766007FFFFB /* Record.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Record.h; sourceTree = "<group>"; };
+		3A0A343513A7F766007FFFFB /* Record.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Record.m; sourceTree = "<group>"; };
 		3A20ECC713A24C85009BC127 /* SearchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SearchTableViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A20ECC813A24C85009BC127 /* SearchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SearchTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A20ECC913A24C85009BC127 /* SearchTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchTableViewController.xib; sourceTree = "<group>"; };
@@ -57,6 +70,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A0A342913A7D3BD007FFFFB /* AddressBookUI.framework in Frameworks */,
+				3A0A342713A7D3B7007FFFFB /* AddressBook.framework in Frameworks */,
 				3A56FD7813A2296400B87EEC /* UIKit.framework in Frameworks */,
 				3A56FD7A13A2296400B87EEC /* Foundation.framework in Frameworks */,
 				3A56FD7C13A2296400B87EEC /* CoreGraphics.framework in Frameworks */,
@@ -80,6 +95,20 @@
 			name = Search;
 			sourceTree = "<group>";
 		};
+		3A0A343313A7F65A007FFFFB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3A56FD8B13A2296500B87EEC /* Letstream.xcdatamodeld */,
+				3A0A343413A7F766007FFFFB /* Record.h */,
+				3A0A343513A7F766007FFFFB /* Record.m */,
+				3A0A343013A7F650007FFFFB /* Group.h */,
+				3A0A343113A7F650007FFFFB /* Group.m */,
+				3A0A342A13A7F64F007FFFFB /* Person.h */,
+				3A0A342B13A7F64F007FFFFB /* Person.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		3A56FD6813A2296400B87EEC = {
 			isa = PBXGroup;
 			children = (
@@ -100,6 +129,8 @@
 		3A56FD7613A2296400B87EEC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3A0A342813A7D3BD007FFFFB /* AddressBookUI.framework */,
+				3A0A342613A7D3B7007FFFFB /* AddressBook.framework */,
 				3A56FD7713A2296400B87EEC /* UIKit.framework */,
 				3A56FD7913A2296400B87EEC /* Foundation.framework */,
 				3A56FD7B13A2296400B87EEC /* CoreGraphics.framework */,
@@ -111,9 +142,9 @@
 		3A56FD7F13A2296400B87EEC /* Letstream */ = {
 			isa = PBXGroup;
 			children = (
-				3A56FD8B13A2296500B87EEC /* Letstream.xcdatamodeld */,
 				3A56FD8813A2296400B87EEC /* LetstreamAppDelegate.h */,
 				3A56FD8913A2296500B87EEC /* LetstreamAppDelegate.m */,
+				3A0A343313A7F65A007FFFFB /* Model */,
 				3A0A342213A7A2EF007FFFFB /* Search */,
 				3A56FD8E13A2296500B87EEC /* iPhone */,
 				3A56FD9513A2296500B87EEC /* iPad */,
@@ -225,6 +256,9 @@
 				3A56FD9813A2296500B87EEC /* LetstreamAppDelegate_iPad.m in Sources */,
 				3A20ECCA13A24C85009BC127 /* SearchTableViewController.m in Sources */,
 				3A0A341F13A7A2E8007FFFFB /* SearchDetailsViewController.m in Sources */,
+				3A0A342C13A7F64F007FFFFB /* Person.m in Sources */,
+				3A0A343213A7F650007FFFFB /* Group.m in Sources */,
+				3A0A343613A7F766007FFFFB /* Record.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
