@@ -12,11 +12,21 @@
 
 - (NSString *)name
 {
-	ABAddressBookRef addressBookRef = ABAddressBookCreate();
-	NSString *name = (NSString *)ABRecordCopyCompositeName(ABAddressBookGetGroupWithRecordID(addressBookRef, [(NSNumber *)[self valueForKey:@"identifier"] intValue]));
-	CFRelease(addressBookRef);
-	
-	return [name autorelease];
+	if (!name)
+	{
+		ABAddressBookRef addressBookRef = ABAddressBookCreate();
+		name = (NSString *)ABRecordCopyCompositeName(ABAddressBookGetGroupWithRecordID(addressBookRef, [(NSNumber *)[self valueForKey:@"identifier"] intValue]));
+		CFRelease(addressBookRef);
+	}
+	return name;
+}
+
+- (NSString *)description { return [self name]; }
+
+- (void)dealloc
+{
+	[name release];
+	[super dealloc];
 }
 
 @end

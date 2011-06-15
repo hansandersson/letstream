@@ -9,8 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <AddressBook/AddressBook.h>
 
-@interface Record : NSManagedObject {}
+@interface Record : NSManagedObject { NSString *name; }
 
-- (NSString *)name;
+@property (readonly) NSString *name;
 
 @end

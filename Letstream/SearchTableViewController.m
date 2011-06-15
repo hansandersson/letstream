@@ -9,6 +9,9 @@
 #import "SearchTableViewController.h"
 #import "SearchDetailsViewController.h"
 
+#import "Group.h"
+#import "Tag.h"
+
 @implementation SearchTableViewController
 
 @synthesize managedObjectContext;
@@ -30,7 +33,10 @@
         	managedObjectContext:managedObjectContext
         	sectionNameKeyPath:nil
         	cacheName:nil];
+		[fetchedResultsController setDelegate:self];
 		[fetchRequest release];
+		
+		[fetchedResultsController performFetch:nil];
 	}
 	return fetchedResultsController;
 }
@@ -40,14 +46,16 @@
 	if ((self = [super initWithNibName:@"SearchTableViewController" bundle:nil]))
 	{
 		managedObjectContext = initManagedObjectContext;
-		[[self managedObjectContext] retain];
+		[managedObjectContext retain];
 	}
 	return self;
 }
 
 - (void)dealloc
 {
-	[[self managedObjectContext] release];
+	[managedObjectContext release];
+	[fetchedResultsController release];
+	
     [super dealloc];
 }
 
@@ -124,6 +132,7 @@
 	{
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CELLTYPE_SEARCH] autorelease];
 		[cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+		[cell setEditingAccessoryType:UITableViewCellAccessoryDetailDisclosureButton];
 	}
 	
 	[[cell textLabel] setText:@"Saved Search"];
@@ -131,13 +140,8 @@
     return cell;
 }
 
-
 // Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath { return YES; }
 
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -145,9 +149,12 @@
     if (editingStyle == UITableViewCellEditingStyleDelete)
 	{
         // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
 		[managedObjectContext deleteObject:[self objectForIndexPath:indexPath]];
-    }   
+		[managedObjectContext save:nil];
+		[[self fetchedResultsController] performFetch:nil];
+		
+        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+	}   
     else if (editingStyle == UITableViewCellEditingStyleInsert)
 	{
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -170,21 +177,19 @@
 }
 */
 
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+{
+	UIViewController *detailsViewController = [[SearchDetailsViewController alloc] initWithRepresentedObject:[self objectForIndexPath:indexPath]];
+	[detailsViewController setTitle:@"Edit Search…"];
+	[self presentDetailsViewController:detailsViewController];
+	[detailsViewController release];
+}
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	if ([self isEditing])
-	{
-		UIViewController *detailsViewController = [[SearchDetailsViewController alloc] initWithRepresentedObject:[self objectForIndexPath:indexPath]];
-		[detailsViewController setTitle:@"Edit Search…"];
-		[self presentDetailsViewController:detailsViewController];
-		[detailsViewController release];
-	}
-	else
-	{
-		//... present search results
-	}
+	//... present search results
 }
 
 - (IBAction)newSearch:(id)sender
@@ -199,23 +204,43 @@
 {
 	UINavigationController *detailsViewControllerContainer = [[UINavigationController alloc] init];
 	[detailsViewControllerContainer pushViewController:detailsViewController animated:NO];
-	[[detailsViewController navigationItem] setRightBarButtonItem:[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(detailsDone:)] autorelease]];
+	[[detailsViewController navigationItem] setRightBarButtonItem:[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(detailsDone:)] autorelease]];
 	[[detailsViewController navigationItem] setLeftBarButtonItem:[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(detailsCancel:)] autorelease]];
 	[self presentModalViewController:detailsViewControllerContainer animated:YES];
+	[detailsViewControllerContainer release];
 }
 
 - (IBAction)detailsDone:(id)sender
 {
-	UIViewController *detailsViewControllerContainer = [self modalViewController];
+	UINavigationController *detailsViewControllerContainer = (UINavigationController *)[self modalViewController];
+	
+	NSManagedObject *search = [(SearchDetailsViewController *)[detailsViewControllerContainer topViewController] representedObject];
+	if (!search) search = [[[NSManagedObject alloc] initWithEntity:[NSEntityDescription entityForName:@"Search" inManagedObjectContext:managedObjectContext] insertIntoManagedObjectContext:managedObjectContext] autorelease];
+	
+	[[search mutableSetValueForKey:@"groups"] removeAllObjects];
+	[[search mutableSetValueForKey:@"tags"] removeAllObjects];
+	
+	for (NSManagedObject *selectedObject in [(SearchDetailsViewController *)[detailsViewControllerContainer topViewController] selectedObjects])
+	{
+		if ([selectedObject isKindOfClass:[Group class]]) [[search mutableSetValueForKey:@"groups"] addObject:selectedObject];
+		else if ([selectedObject isKindOfClass:[Tag class]]) [[search mutableSetValueForKey:@"tags"] addObject:selectedObject];
+	}
+	
 	[self dismissModalViewControllerAnimated:YES];
-	[detailsViewControllerContainer release];
+	NSError *error = nil;
+	[managedObjectContext save:&error];
+	if (error) NSLog(@"%@", error);
+	
+	[[self fetchedResultsController] performFetch:nil];
+	[(UITableView *)[self tableView] reloadData];
 }
 
 - (IBAction)detailsCancel:(id)sender
 {
-	UIViewController *detailsViewControllerContainer = [self modalViewController];
 	[self dismissModalViewControllerAnimated:YES];
-	[detailsViewControllerContainer release];
+	NSError *error = nil;
+	[managedObjectContext save:&error];
+	if (error) NSLog(@"%@", error);
 }
 
 @end

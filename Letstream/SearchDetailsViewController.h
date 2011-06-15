@@ -9,7 +9,10 @@
 #import <UIKit/UIKit.h>
 
 
-@interface SearchDetailsViewController : UITableViewController {}
+@interface SearchDetailsViewController : UITableViewController <UITextFieldDelegate>
+{
+	NSMutableSet *selectedObjects;
+}
 
 - (id)initWithRepresentedObject:(NSManagedObject *)initRepresentedObject;
 - (id)initWithManagedObjectContext:(NSManagedObjectContext *)initManagedObjectContext;
@@ -17,8 +20,8 @@
 @property (readonly) NSManagedObjectContext *managedObjectContext;
 @property (readonly) NSManagedObject *representedObject;
 @property (readonly) NSArray *sections;
-@property (readonly) NSDictionary *sectionObjects;
+@property (readonly) NSSet *selectedObjects;
 
-- (IBAction)tappedAdder:(id)sender;
+- (void)newGroup:(id)sender;
 
 @end

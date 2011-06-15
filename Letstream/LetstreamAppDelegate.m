@@ -7,7 +7,11 @@
 //
 
 #import "LetstreamAppDelegate.h"
+
+#import "SurveyTableViewController.h"
 #import "SearchTableViewController.h"
+
+void addressBookDidChangeCallback(ABAddressBookRef addressBook, CFDictionaryRef info, void *context) { [(LetstreamAppDelegate *)[[UIApplication sharedApplication] delegate] synchronizeAddressBook]; }
 
 @implementation LetstreamAppDelegate
 
@@ -19,27 +23,12 @@
 {
 	// Override point for customization after application launch.
 	NSLog(@"Universal application:didFinishLaunchingWithOptions:");
-	[self setTabBarController:[[[UITabBarController alloc] init] autorelease]];
 	
-	UINavigationController
-	*searchViewController = [[UINavigationController alloc] init],
-	*streamViewController = [[UINavigationController alloc] init],
-	*signalViewController = [[UINavigationController alloc] init];
-	
-	[searchViewController pushViewController:[[[SearchTableViewController alloc] initWithManagedObjectContext:[self managedObjectContext]] autorelease] animated:NO];
-	
-	[tabBarController setViewControllers:
-	 [NSArray arrayWithObjects:
-	  searchViewController,
-	  signalViewController,
-	  streamViewController,
-	  nil]
-	 ];
-	 
-	[searchViewController release];
-	[streamViewController release];
-	[signalViewController release];
-	
+	for (UINavigationController *navigationController in [tabBarController viewControllers])
+	{
+		if ([[navigationController title] isEqualToString:@"Survey"]) [navigationController pushViewController:[[[SurveyTableViewController alloc] initWithManagedObjectContext:[self managedObjectContext]] autorelease] animated:NO];
+		else if ([[navigationController title] isEqualToString:@"Search"]) [navigationController pushViewController:[[[SearchTableViewController alloc] initWithManagedObjectContext:[self managedObjectContext]] autorelease] animated:NO];
+	}
 	
 	[window addSubview:[tabBarController view]];
 	[window makeKeyAndVisible];
@@ -47,22 +36,21 @@
 	//Call subclasses
 	[self applicationDidFinishLaunching:application];
 	
-	[self updateAddressBookGroups];
-	
+	addressBookRef = ABAddressBookCreate();
+	[self synchronizeAddressBook];
+	ABAddressBookRegisterExternalChangeCallback(addressBookRef, addressBookDidChangeCallback, NULL);
     return YES;
 }
 
-- (void)updateAddressBookGroups
+- (void)synchronizeAddressBook
 {
-	ABAddressBookRef addressBookRef = ABAddressBookCreate();
+	//GROUPS
+	NSArray *groupRefsExternal = [(NSArray *)ABAddressBookCopyArrayOfAllGroups(addressBookRef) autorelease];
 	
-	NSArray *groupRefsExternal = (NSArray *)ABAddressBookCopyArrayOfAllGroups(addressBookRef);
-	
-	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+	NSFetchRequest *fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
 	[fetchRequest setEntity:[NSEntityDescription entityForName:@"Group" inManagedObjectContext:[self managedObjectContext]]];
 	NSError *error = nil;
 	NSArray *groupsInternal = (NSArray *)[[self managedObjectContext] executeFetchRequest:fetchRequest error:&error];
-	[fetchRequest release];
 	
 	if (error)
 	{
@@ -71,7 +59,7 @@
 	}
 	
 	NSArray *groupIDsInternal = [groupsInternal valueForKeyPath:@"identifier"];
-	NSMutableArray *groupIDsExternal = [[NSMutableArray alloc] initWithCapacity:[groupRefsExternal count]];
+	NSMutableArray *groupIDsExternal = [NSMutableArray arrayWithCapacity:[groupRefsExternal count]];
 	for (id groupRefExternal in groupRefsExternal)
 	{
 		NSNumber *groupID = [[NSNumber alloc] initWithInt:ABRecordGetRecordID((ABRecordRef)groupRefExternal)];
@@ -80,22 +68,57 @@
 		if (![groupIDsInternal containsObject:groupID])
 		{
 			NSManagedObject *newGroup = [[NSManagedObject alloc] initWithEntity:[NSEntityDescription entityForName:@"Group" inManagedObjectContext:[self managedObjectContext]] insertIntoManagedObjectContext:[self managedObjectContext]];
-			NSLog(@"%@", groupID);
 			[newGroup setValue:groupID forKey:@"identifier"];
 			[newGroup release];
 		}
 		
 		[groupID release];
 	}
-	[groupRefsExternal release];
 	
 	for (NSManagedObject *groupInternal in groupsInternal)
 	{
 		if (![groupIDsExternal containsObject:[groupInternal valueForKey:@"identifier"]]) [[self managedObjectContext] deleteObject:groupInternal];
 	}
 	
-	[[self managedObjectContext] save:nil];
+	//PEOPLE
+	NSArray *personRefsExternal = [(NSArray *)ABAddressBookCopyArrayOfAllPeople(addressBookRef) autorelease];
 	
+	[fetchRequest setEntity:[NSEntityDescription entityForName:@"Person" inManagedObjectContext:[self managedObjectContext]]];
+	error = nil;
+	NSArray *personsInternal = (NSArray *)[[self managedObjectContext] executeFetchRequest:fetchRequest error:&error];
+	
+	if (error)
+	{
+		NSLog(@"%@", error);
+		return;
+	}
+	
+	NSArray *personIDsInternal = [personsInternal valueForKeyPath:@"identifier"];
+	NSMutableArray *personIDsExternal = [NSMutableArray arrayWithCapacity:[personRefsExternal count]];
+	for (id personRefExternal in personRefsExternal)
+	{
+		NSNumber *personID = [[NSNumber alloc] initWithInt:ABRecordGetRecordID((ABRecordRef)personRefExternal)];
+		[personIDsExternal addObject:personID];
+		
+		if (![personIDsInternal containsObject:personID])
+		{
+			NSManagedObject *newPerson = [[NSManagedObject alloc] initWithEntity:[NSEntityDescription entityForName:@"Person" inManagedObjectContext:[self managedObjectContext]] insertIntoManagedObjectContext:[self managedObjectContext]];
+			[newPerson setValue:personID forKey:@"identifier"];
+			[newPerson release];
+		}
+		
+		[personID release];
+	}
+	
+	for (NSManagedObject *personInternal in personsInternal)
+	{
+		if (![personIDsExternal containsObject:[personInternal valueForKey:@"identifier"]]) [[self managedObjectContext] deleteObject:personInternal];
+	}
+	
+	//GROUP MEMBERS
+	//...
+	
+	[self saveContext];
 	if (ABAddressBookHasUnsavedChanges(addressBookRef)) ABAddressBookSave(addressBookRef, NULL);
 	
 	CFRelease(addressBookRef);
@@ -122,13 +145,12 @@
 	/*
 	 Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 	 */
+	 //[self synchronizeAddressBook];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-	/*
-	 Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-	 */
+	//
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -144,6 +166,9 @@
 	[managedObjectContext release];
 	[managedObjectModel release];
 	[persistentStoreCoordinator release];
+	ABAddressBookUnregisterExternalChangeCallback(addressBookRef, addressBookDidChangeCallback, NULL);
+	CFRelease(addressBookRef);
+	
     [super dealloc];
 }
 

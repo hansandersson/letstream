@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 
-@interface SearchTableViewController : UITableViewController
+@interface SearchTableViewController : UITableViewController <NSFetchedResultsControllerDelegate>
 {
 	NSManagedObjectContext *managedObjectContext;
 	NSFetchedResultsController *fetchedResultsController;

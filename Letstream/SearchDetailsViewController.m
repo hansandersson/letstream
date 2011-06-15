@@ -7,29 +7,65 @@
 //
 
 #import "SearchDetailsViewController.h"
-#import "LetstreamAppDelegate.h"
-#import "Record.h"
+#import "Group.h"
+#import "Tag.h"
+
+#import "PeoplePicker.h"
+
+#import "SearchDetailsSection.h"
 
 @implementation SearchDetailsViewController
 
 @synthesize representedObject, managedObjectContext;
-@synthesize sections, sectionObjects;
+@synthesize sections, selectedObjects;
 
 - (NSArray *)sections
 {
-	if (!sections) sections = [[NSArray alloc] initWithObjects:@"Who", @"What", @"Where", @"When", nil];
+	if (!sections)
+	{
+		
+		NSFetchRequest *fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
+		NSError *error;
+		
+		error = nil;
+		[fetchRequest setEntity:[NSEntityDescription entityForName:@"Group" inManagedObjectContext:managedObjectContext]];
+		SearchDetailsSection *who = [[[SearchDetailsSection alloc] initWithTitle:@"Who" representedObjects:[managedObjectContext executeFetchRequest:fetchRequest error:&error]] autorelease];
+		if (error) NSLog(@"%@", error);
+		
+		error = nil;
+		[fetchRequest setEntity:[NSEntityDescription entityForName:@"Person" inManagedObjectContext:managedObjectContext]];
+		PeoplePicker *peoplePicker = [[PeoplePicker alloc] initWithPersonObjects:[managedObjectContext executeFetchRequest:fetchRequest error:&error]];
+		if (error) NSLog(@"%@", error);
+		
+		[[peoplePicker navigationItem] setRightBarButtonItem:[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(newGroup:)] autorelease]];
+		//SHOULD SET TITLE VIEW TO A TEXTFIELD FOR NAMING
+		[[peoplePicker navigationItem] setTitleView:nil];
+		
+		[who setEditViewController:peoplePicker];
+		
+		error = nil;
+		[fetchRequest setEntity:[NSEntityDescription entityForName:@"Tag" inManagedObjectContext:managedObjectContext]];
+		SearchDetailsSection *what = [[[SearchDetailsSection alloc] initWithTitle:@"What" representedObjects:[managedObjectContext executeFetchRequest:fetchRequest error:&error]] autorelease];
+		if (error) NSLog(@"%@", error);
+		
+		SearchDetailsSection *where = [[[SearchDetailsSection alloc] initWithTitle:@"Where" representedObjects:[NSArray array]] autorelease];
+		
+		//UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 0.0f, 216.0f)];
+		//[datePicker setDatePickerMode:UIDatePickerModeCountDownTimer];
+		//[datePicker setMinuteInterval:5];
+		SearchDetailsSection *when = [[[SearchDetailsSection alloc] initWithTitle:@"When" representedObjects:[NSArray array]] autorelease];
+		//[[when editViews] addObject:datePicker];
+		//[datePicker release];
+		
+		sections = [[NSArray alloc] initWithObjects:who, what, where, when, nil];
+	}
 	return sections;
 }
 
-- (NSDictionary *)sectionObjects
+- (NSSet *)selectedObjects
 {
-	if (!sectionObjects)
-	{
-		NSMutableDictionary *sectionObjectsMutable = [NSMutableDictionary dictionaryWithCapacity:[[self sections] count]];
-		for (NSString *section in [self sections]) [sectionObjectsMutable setObject:[NSArray array] forKey:section];
-		sectionObjects = [sectionObjectsMutable copy];
-	}
-	return sectionObjects;
+	if (!selectedObjects) selectedObjects = [[NSMutableSet alloc] init];
+	return (NSSet *)selectedObjects;
 }
 
 - (id)initWithRepresentedObject:(NSManagedObject *)initRepresentedObject
@@ -38,6 +74,9 @@
 	{
 		representedObject = initRepresentedObject;
 		[representedObject retain];
+		
+		for (Group *group in [representedObject valueForKey:@"groups"]) [(NSMutableSet *)[self selectedObjects] addObject:group];
+		for (Tag *tag in [representedObject valueForKey:@"tags"]) [(NSMutableSet *)[self selectedObjects] addObject:tag];
     }
     return self;
 }
@@ -55,9 +94,9 @@
 - (void)dealloc
 {
 	[sections release];
-	[sectionObjects release];
 	[representedObject release];
 	[managedObjectContext release];
+	[selectedObjects release];
     [super dealloc];
 }
 
@@ -118,103 +157,105 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView { return [[self sections] count]; }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section { return [(SearchDetailsSection *)[[self sections] objectAtIndex:section] rowsCount]; }
+
+- (id)representedObjectForIndexPath:(NSIndexPath *)indexPath
 {
-	if (section == (NSInteger) [[self sections] indexOfObject:@"Who"])
-	{
-		NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-		[fetchRequest setEntity:[NSEntityDescription entityForName:@"Group" inManagedObjectContext:managedObjectContext]];
-		NSUInteger count = [[managedObjectContext executeFetchRequest:fetchRequest error:nil] count];
-		[fetchRequest release];
-		return count + 1;
-	}
-	else if (section == (NSInteger) [[self sections] indexOfObject:@"What"]) return 1;
-	else if (section == (NSInteger) [[self sections] indexOfObject:@"Where"]) return 1;
-	else if (section == (NSInteger) [[self sections] indexOfObject:@"When"]) return 1;
+	if (!([indexPath section] < [[self sections] count])) return nil;
 	
-	return 0;
+	SearchDetailsSection *section = [[self sections] objectAtIndex:[indexPath section]];
+	
+	if (!([indexPath row] < [[section representedObjects] count])) return nil;
+	
+	return [[section representedObjects] objectAtIndex:[indexPath row]];
 }
 
-- (NSString *)stringForIndexPath:(NSIndexPath *)indexPath
+- (UIView *)editViewForIndexPath:(NSIndexPath *)indexPath
 {
-	if ([indexPath section] == [[self sections] indexOfObject:@"Who"])
-	{
-		NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-		[fetchRequest setEntity:[NSEntityDescription entityForName:@"Group" inManagedObjectContext:managedObjectContext]];
-		NSError *error = nil;
-		NSArray *groups = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
-		if (error) NSLog(@"%@", error);
-		[fetchRequest release];
-		
-		if ([indexPath row] == [groups count]) return @"Add…";
-		
-		return [(Record *)[groups objectAtIndex:[indexPath row]] name];
-	}
-	else if ([indexPath section] == [[self sections] indexOfObject:@"What"]) return @"What";
-	else if ([indexPath section] == [[self sections] indexOfObject:@"Where"]) return @"Where";
-	else if ([indexPath section] == [[self sections] indexOfObject:@"When"]) return @"When";
-	
-	return 0;
+	SearchDetailsSection *section = [[self sections] objectAtIndex:[indexPath section]];
+	return [[section editViews] objectAtIndex:([indexPath row]-[[section representedObjects] count])];
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section { return [[self sections] objectAtIndex:section]; }
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section { return [(SearchDetailsSection *)[[self sections] objectAtIndex:section] title]; }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	#define CELLTYPE_ADD @"SearchCellAdd"
+	#define CELLTYPE_EDIT @"SearchCellEdit"
 	#define CELLTYPE_DEFAULT @"SearchCellDefault"
 	
-	NSString *cellTextLabelStringValue = [self stringForIndexPath:indexPath];
-	
-	NSString *CELLTYPE = [cellTextLabelStringValue isEqualToString:@"Add…"] ? CELLTYPE_ADD : CELLTYPE_DEFAULT;
+	NSString *cellTextLabelStringValue = [[self representedObjectForIndexPath:indexPath] description];
+	NSString *CELLTYPE = cellTextLabelStringValue ? CELLTYPE_DEFAULT : CELLTYPE_EDIT;
     
     UITableViewCell *cell;
     if (!(cell = [tableView dequeueReusableCellWithIdentifier:CELLTYPE]))
 	{
-		if ([CELLTYPE isEqualToString:CELLTYPE_ADD])
-		{
-			cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CELLTYPE] autorelease];
-			[[cell textLabel] setTextColor:[UIColor lightGrayColor]];
-			[[cell textLabel] setText:@"Add…"];
-    		[cell setAccessoryView:[UIButton buttonWithType:UIButtonTypeContactAdd]];
-			[(UIButton *)[cell accessoryView] addTarget:self action:@selector(tappedAdder:) forControlEvents:UIControlEventTouchUpInside];
-		}
-		else
-		{
-			cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CELLTYPE] autorelease];
-			[[cell textLabel] setTextAlignment:UITextAlignmentLeft];
-			[[cell textLabel] setTextColor:[UIColor darkTextColor]];
-    		[cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-		}
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CELLTYPE] autorelease];
+		
+		if (CELLTYPE == CELLTYPE_EDIT) [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+		else [[cell textLabel] setTextColor:[UIColor darkTextColor]];
 	}
 	
-	if (![CELLTYPE isEqualToString:CELLTYPE_ADD]) [[cell textLabel] setText:[self stringForIndexPath:indexPath]];
+	if (CELLTYPE != CELLTYPE_EDIT)
+	{
+		[[cell textLabel] setText:[[self representedObjectForIndexPath:indexPath] description]];
+		[cell setAccessoryType:[[self selectedObjects] containsObject:[self representedObjectForIndexPath:indexPath]] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone];
+	}
+	else
+	{
+		for (UIView *subview in [[cell contentView] subviews]) [subview removeFromSuperview];
+		
+		CGRect contentViewBounds = [[cell contentView] bounds];
+		
+		UIView *editView = [self editViewForIndexPath:indexPath];
+		
+		const CGSize padding = CGSizeMake(10.0f, 10.0f);
+		[editView setFrame:CGRectMake(padding.width, padding.height, contentViewBounds.size.width - 2.0f*padding.width, [editView frame].size.height)];
+		[editView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+		[editView setTag:[indexPath section]];
+		
+		[[cell contentView] addSubview:editView];
+	}
 
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+	if ([self representedObjectForIndexPath:indexPath]) return [tableView rowHeight];
+	
+	UIView *editView = [self editViewForIndexPath:indexPath];
+	return 23.0f + [editView frame].size.height;
 }
-*/
 
-/*
+
+// Override to support conditional editing of the table view.
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath { return !![self representedObjectForIndexPath:indexPath]; }
+
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
+    if (editingStyle == UITableViewCellEditingStyleDelete)
+	{
         // Delete the row from the data source
+		id deletedObject = [self representedObjectForIndexPath:indexPath];
+		[self selectedObjects];
+		[selectedObjects removeObject:deletedObject];
+		[[(SearchDetailsSection *)[[self sections] objectAtIndex:[indexPath section]] representedObjects] removeObject:deletedObject];
+		[managedObjectContext deleteObject:deletedObject];
+		if ([[[[self sections] objectAtIndex:[indexPath section]] title] isEqualToString:@"Who"])
+		{
+			ABAddressBookRef addressBookRef = ABAddressBookCreate();
+			ABAddressBookRemoveRecord(addressBookRef, ABAddressBookGetGroupWithRecordID(addressBookRef, [[(Group *)deletedObject identifier] intValue]), NULL);
+			ABAddressBookSave(addressBookRef, NULL);
+			CFRelease(addressBookRef);
+		}
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
+    else if (editingStyle == UITableViewCellEditingStyleInsert)
+	{
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
 }
-*/
 
 /*
 // Override to support rearranging the table view.
@@ -232,20 +273,63 @@
 }
 */
 
+- (BOOL)textFieldShouldClear:(UITextField *)textField
+{
+	[textField setText:nil];
+	[textField resignFirstResponder];
+	return NO;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+	/*if (![[textField text] isEqualToString:@""])
+	{
+		SearchDetailsSection *section = [[self sections] objectAtIndex:[textField tag]];
+		NSIndexPath *newObjectIndexPath = [NSIndexPath indexPathForRow:[[section representedObjects] count] inSection:[textField tag]];
+		
+		id newObject = nil;
+		
+		if ([[section title] isEqualToString:@"Who"]) newObject = [Group groupWithName:[textField text] inManagedObjectContext:managedObjectContext];
+		else if ([[section title] isEqualToString:@"What"]) newObject = [Tag tagWithText:[textField text] inManagedObjectContext:managedObjectContext];
+		
+		[[section representedObjects] addObject:newObject];
+			
+		[(UITableView *)[self view] insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[newObjectIndexPath row] inSection:[newObjectIndexPath section]]] withRowAnimation:UITableViewRowAnimationTop];
+		
+		[textField setText:nil];
+		
+		[(UITableView *)[self view] reloadSections:[NSIndexSet indexSetWithIndex:[textField tag]] withRowAnimation:UITableViewRowAnimationNone];
+	}*/
+	[textField resignFirstResponder];
+	return YES;
+}
+
+- (void)newGroup:(id)sender
+{
+	//UIBarButtonItem *saveButton = (UIBarButtonItem *)sender;
+	[[self navigationController] popToViewController:self animated:YES];
+}
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Navigation logic may go here. Create and push another view controller.
-	if ([[[[tableView cellForRowAtIndexPath:indexPath] textLabel] text] isEqualToString:@"Add…"]) [self tappedAdder:[[tableView cellForRowAtIndexPath:indexPath] accessoryView]];
-}
-
-- (IBAction)tappedAdder:(id)sender
-{
-	UITableViewCell *tableCell = (UITableViewCell *)[sender superview];
-	UITableView *tableView = (UITableView *)[tableCell superview];
-	NSIndexPath *indexPath = [tableView indexPathForCell:tableCell];
-	[tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:NO];
+	
+	if ([self representedObjectForIndexPath:indexPath])
+	{
+		if (![[self selectedObjects] containsObject:[self representedObjectForIndexPath:indexPath]])
+		{
+			[selectedObjects addObject:[self representedObjectForIndexPath:indexPath]];
+			[[tableView cellForRowAtIndexPath:indexPath] setAccessoryType:UITableViewCellAccessoryCheckmark];
+		}
+		else
+		{
+			[selectedObjects removeObject:[self representedObjectForIndexPath:indexPath]];
+			[[tableView cellForRowAtIndexPath:indexPath] setAccessoryType:UITableViewCellAccessoryNone];
+		}
+	}
+	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 @end

@@ -9,16 +9,21 @@
 #import <UIKit/UIKit.h>
 #import <AddressBook/AddressBook.h>
 
-@interface LetstreamAppDelegate : NSObject <UIApplicationDelegate> {}
+void addressBookDidChangeCallback(ABAddressBookRef addressBook, CFDictionaryRef info, void *context);
+
+@interface LetstreamAppDelegate : NSObject <UIApplicationDelegate>
+{
+	ABAddressBookRef addressBookRef;
+}
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) UITabBarController *tabBarController;
+@property (nonatomic, retain) IBOutlet UITabBarController *tabBarController;
 
 @property (nonatomic, retain, readonly) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, retain, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
-- (void)updateAddressBookGroups;
+- (void)synchronizeAddressBook;
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;

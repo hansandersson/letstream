@@ -14,6 +14,8 @@
 
 @interface Group : Record {}
 
++ (Group *)groupWithName:(NSString *)name inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
+
 @property (nonatomic, retain) NSNumber *identifier;
 @property (nonatomic, retain) NSSet *searches;
 

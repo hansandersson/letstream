@@ -16,6 +16,10 @@
 		3A0A343613A7F766007FFFFB /* Record.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A0A343513A7F766007FFFFB /* Record.m */; };
 		3A20ECCA13A24C85009BC127 /* SearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A20ECC813A24C85009BC127 /* SearchTableViewController.m */; };
 		3A20ECCB13A24C85009BC127 /* SearchTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A20ECC913A24C85009BC127 /* SearchTableViewController.xib */; };
+		3A53A06213A91755001972AD /* SurveyTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A53A06013A91755001972AD /* SurveyTableViewController.m */; };
+		3A53A06313A91755001972AD /* SurveyTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A53A06113A91755001972AD /* SurveyTableViewController.xib */; };
+		3A53A06D13A91EAD001972AD /* PeoplePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A53A06B13A91EAD001972AD /* PeoplePicker.m */; };
+		3A53A06E13A91EAD001972AD /* PeoplePicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A53A06C13A91EAD001972AD /* PeoplePicker.xib */; };
 		3A56FD7813A2296400B87EEC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A56FD7713A2296400B87EEC /* UIKit.framework */; };
 		3A56FD7A13A2296400B87EEC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A56FD7913A2296400B87EEC /* Foundation.framework */; };
 		3A56FD7C13A2296400B87EEC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A56FD7B13A2296400B87EEC /* CoreGraphics.framework */; };
@@ -28,6 +32,9 @@
 		3A56FD9413A2296500B87EEC /* MainWindow_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A56FD9213A2296500B87EEC /* MainWindow_iPhone.xib */; };
 		3A56FD9813A2296500B87EEC /* LetstreamAppDelegate_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A56FD9713A2296500B87EEC /* LetstreamAppDelegate_iPad.m */; };
 		3A56FD9B13A2296500B87EEC /* MainWindow_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A56FD9913A2296500B87EEC /* MainWindow_iPad.xib */; };
+		3ADB9B7213A87F410050BF7C /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ADB9B7113A87F410050BF7C /* Tag.m */; };
+		3ADB9B7513A885AB0050BF7C /* SearchDetailsSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ADB9B7413A885AB0050BF7C /* SearchDetailsSection.m */; };
+		3ADB9B7D13A90AC00050BF7C /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3ADB9B7C13A90AC00050BF7C /* Settings.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +52,12 @@
 		3A20ECC713A24C85009BC127 /* SearchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SearchTableViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A20ECC813A24C85009BC127 /* SearchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SearchTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A20ECC913A24C85009BC127 /* SearchTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchTableViewController.xib; sourceTree = "<group>"; };
+		3A53A05F13A91755001972AD /* SurveyTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurveyTableViewController.h; sourceTree = "<group>"; };
+		3A53A06013A91755001972AD /* SurveyTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurveyTableViewController.m; sourceTree = "<group>"; };
+		3A53A06113A91755001972AD /* SurveyTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SurveyTableViewController.xib; sourceTree = "<group>"; };
+		3A53A06A13A91EAD001972AD /* PeoplePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeoplePicker.h; sourceTree = "<group>"; };
+		3A53A06B13A91EAD001972AD /* PeoplePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeoplePicker.m; sourceTree = "<group>"; };
+		3A53A06C13A91EAD001972AD /* PeoplePicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PeoplePicker.xib; sourceTree = "<group>"; };
 		3A56FD7313A2296400B87EEC /* Letstream.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Letstream.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A56FD7713A2296400B87EEC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3A56FD7913A2296400B87EEC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -63,6 +76,11 @@
 		3A56FD9613A2296500B87EEC /* LetstreamAppDelegate_iPad.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LetstreamAppDelegate_iPad.h; path = iPad/LetstreamAppDelegate_iPad.h; sourceTree = "<group>"; };
 		3A56FD9713A2296500B87EEC /* LetstreamAppDelegate_iPad.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = LetstreamAppDelegate_iPad.m; path = iPad/LetstreamAppDelegate_iPad.m; sourceTree = "<group>"; };
 		3A56FD9A13A2296500B87EEC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = iPad/en.lproj/MainWindow_iPad.xib; sourceTree = "<group>"; };
+		3ADB9B7013A87F410050BF7C /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Tag.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		3ADB9B7113A87F410050BF7C /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = Tag.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		3ADB9B7313A885AB0050BF7C /* SearchDetailsSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchDetailsSection.h; sourceTree = "<group>"; };
+		3ADB9B7413A885AB0050BF7C /* SearchDetailsSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchDetailsSection.m; sourceTree = "<group>"; };
+		3ADB9B7C13A90AC00050BF7C /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +109,7 @@
 				3A0A341C13A7A2E7007FFFFB /* SearchDetailsViewController.h */,
 				3A0A341D13A7A2E7007FFFFB /* SearchDetailsViewController.m */,
 				3A0A341E13A7A2E8007FFFFB /* SearchDetailsViewController.xib */,
+				3ADB9B7613A885B30050BF7C /* Sections */,
 			);
 			name = Search;
 			sourceTree = "<group>";
@@ -99,6 +118,8 @@
 			isa = PBXGroup;
 			children = (
 				3A56FD8B13A2296500B87EEC /* Letstream.xcdatamodeld */,
+				3ADB9B7013A87F410050BF7C /* Tag.h */,
+				3ADB9B7113A87F410050BF7C /* Tag.m */,
 				3A0A343413A7F766007FFFFB /* Record.h */,
 				3A0A343513A7F766007FFFFB /* Record.m */,
 				3A0A343013A7F650007FFFFB /* Group.h */,
@@ -107,6 +128,26 @@
 				3A0A342B13A7F64F007FFFFB /* Person.m */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		3A53A05613A9167B001972AD /* Survey */ = {
+			isa = PBXGroup;
+			children = (
+				3A53A05F13A91755001972AD /* SurveyTableViewController.h */,
+				3A53A06013A91755001972AD /* SurveyTableViewController.m */,
+				3A53A06113A91755001972AD /* SurveyTableViewController.xib */,
+			);
+			name = Survey;
+			sourceTree = "<group>";
+		};
+		3A53A06913A91E8E001972AD /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				3A53A06A13A91EAD001972AD /* PeoplePicker.h */,
+				3A53A06B13A91EAD001972AD /* PeoplePicker.m */,
+				3A53A06C13A91EAD001972AD /* PeoplePicker.xib */,
+			);
+			name = Interface;
 			sourceTree = "<group>";
 		};
 		3A56FD6813A2296400B87EEC = {
@@ -142,13 +183,15 @@
 		3A56FD7F13A2296400B87EEC /* Letstream */ = {
 			isa = PBXGroup;
 			children = (
-				3A56FD8813A2296400B87EEC /* LetstreamAppDelegate.h */,
-				3A56FD8913A2296500B87EEC /* LetstreamAppDelegate.m */,
-				3A0A343313A7F65A007FFFFB /* Model */,
-				3A0A342213A7A2EF007FFFFB /* Search */,
+				3A56FD8013A2296400B87EEC /* Supporting Files */,
 				3A56FD8E13A2296500B87EEC /* iPhone */,
 				3A56FD9513A2296500B87EEC /* iPad */,
-				3A56FD8013A2296400B87EEC /* Supporting Files */,
+				3A56FD8813A2296400B87EEC /* LetstreamAppDelegate.h */,
+				3A56FD8913A2296500B87EEC /* LetstreamAppDelegate.m */,
+				3A53A06913A91E8E001972AD /* Interface */,
+				3A0A343313A7F65A007FFFFB /* Model */,
+				3A53A05613A9167B001972AD /* Survey */,
+				3A0A342213A7A2EF007FFFFB /* Search */,
 			);
 			path = Letstream;
 			sourceTree = "<group>";
@@ -156,6 +199,7 @@
 		3A56FD8013A2296400B87EEC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				3ADB9B7C13A90AC00050BF7C /* Settings.bundle */,
 				3A56FD8113A2296400B87EEC /* Letstream-Info.plist */,
 				3A56FD8213A2296400B87EEC /* InfoPlist.strings */,
 				3A56FD8513A2296400B87EEC /* Letstream-Prefix.pch */,
@@ -182,6 +226,15 @@
 				3A56FD9913A2296500B87EEC /* MainWindow_iPad.xib */,
 			);
 			name = iPad;
+			sourceTree = "<group>";
+		};
+		3ADB9B7613A885B30050BF7C /* Sections */ = {
+			isa = PBXGroup;
+			children = (
+				3ADB9B7313A885AB0050BF7C /* SearchDetailsSection.h */,
+				3ADB9B7413A885AB0050BF7C /* SearchDetailsSection.m */,
+			);
+			name = Sections;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -239,6 +292,9 @@
 				3A56FD9B13A2296500B87EEC /* MainWindow_iPad.xib in Resources */,
 				3A20ECCB13A24C85009BC127 /* SearchTableViewController.xib in Resources */,
 				3A0A342013A7A2E8007FFFFB /* SearchDetailsViewController.xib in Resources */,
+				3ADB9B7D13A90AC00050BF7C /* Settings.bundle in Resources */,
+				3A53A06313A91755001972AD /* SurveyTableViewController.xib in Resources */,
+				3A53A06E13A91EAD001972AD /* PeoplePicker.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,6 +315,10 @@
 				3A0A342C13A7F64F007FFFFB /* Person.m in Sources */,
 				3A0A343213A7F650007FFFFB /* Group.m in Sources */,
 				3A0A343613A7F766007FFFFB /* Record.m in Sources */,
+				3ADB9B7213A87F410050BF7C /* Tag.m in Sources */,
+				3ADB9B7513A885AB0050BF7C /* SearchDetailsSection.m in Sources */,
+				3A53A06213A91755001972AD /* SurveyTableViewController.m in Sources */,
+				3A53A06D13A91EAD001972AD /* PeoplePicker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
