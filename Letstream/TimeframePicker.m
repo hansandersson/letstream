@@ -1,31 +1,30 @@
 //
-//  SurveyTableViewController.m
+//  TimeframePicker.m
 //  Letstream
 //
-//  Created by Hans Andersson on 11/06/15.
+//  Created by Hans Andersson on 11/06/18.
 //  Copyright 2011 Hans Andersson. All rights reserved.
 //
 
-#import "SurveyTableViewController.h"
+#import "TimeframePicker.h"
 
 
-@implementation SurveyTableViewController
+@implementation TimeframePicker
 
-@synthesize managedObjectContext;
-
-- (id)initWithManagedObjectContext:(NSManagedObjectContext *)initManagedObjectContext
+- (id)init
 {
-	if ((self = [super initWithNibName:@"SurveyTableViewController" bundle:nil]))
+	if ((self = [super initWithNibName:@"TimeframePicker" bundle:nil]))
 	{
-		managedObjectContext = initManagedObjectContext;
-		[managedObjectContext retain];
+		options = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Timeframe" ofType:@"plist"]];
+		selectedIndexes = [[NSMutableSet alloc] init];
 	}
 	return self;
 }
 
 - (void)dealloc
 {
-	[managedObjectContext release];
+	[options release];
+	[selectedIndexes release];
     [super dealloc];
 }
 
@@ -42,7 +41,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	[self setTitle:@"Survey"];
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -86,30 +84,35 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+- (NSArray *)objectsInSection:(NSInteger)section
 {
-	// Return the number of sections.
-    return 0;
+	NSString *key = [[options allKeys] objectAtIndex:section];
+	if ([[(NSArray *)[options objectForKey:key] lastObject] isKindOfClass:[NSDictionary class]]) return [[options objectForKey:key] valueForKeyPath:@"label"];
+	return [options objectForKey:key];
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-	// Return the number of rows in the section.
-    return 0;
-}
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView { return 2; }
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section { return !section ? @"Days of Week" : @"Times of Day"; }
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section { return [[self objectsInSection:section] count]; }
+
+- (UITableViewCellAccessoryType)cellAccessoryTypeForRowAtIndexPath:(NSIndexPath *)indexPath { return [selectedIndexes containsObject:indexPath] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone; }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"GenericCell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
+    UITableViewCell *cell;;
+    if (!(cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier]))
+	{
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     
-    // Configure the cell...
-    
-    return cell;
+	[[cell textLabel] setText:[[self objectsInSection:[indexPath section]] objectAtIndex:[indexPath row]]];
+	[cell setAccessoryType:[self cellAccessoryTypeForRowAtIndexPath:indexPath]];
+
+   	return cell;
 }
 
 /*
@@ -155,14 +158,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
+	if ([selectedIndexes containsObject:indexPath]) [selectedIndexes removeObject:indexPath];
+	else [selectedIndexes addObject:indexPath];
+	[[tableView cellForRowAtIndexPath:indexPath] setAccessoryType:[self cellAccessoryTypeForRowAtIndexPath:indexPath]];
+	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 @end

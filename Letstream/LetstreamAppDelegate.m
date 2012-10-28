@@ -3,7 +3,7 @@
 //  Letstream
 //
 //  Created by Hans Andersson on 11/06/10.
-//  Copyright 2011 Ultramentem & Vigorware. All rights reserved.
+//  Copyright 2011 Hans Andersson. All rights reserved.
 //
 
 #import "LetstreamAppDelegate.h"
@@ -11,7 +11,9 @@
 #import "SurveyTableViewController.h"
 #import "SearchTableViewController.h"
 
-void addressBookDidChangeCallback(ABAddressBookRef addressBook, CFDictionaryRef info, void *context) { [(LetstreamAppDelegate *)[[UIApplication sharedApplication] delegate] synchronizeAddressBook]; }
+#import "Record.h"
+
+void synchronizeAddressBook(ABAddressBookRef addressBook, CFDictionaryRef info, void *context) { [NSThread detachNewThreadSelector:@selector(synchronizeAddressBook) toTarget:(LetstreamAppDelegate *)[[UIApplication sharedApplication] delegate] withObject:nil]; }
 
 @implementation LetstreamAppDelegate
 
@@ -37,13 +39,14 @@ void addressBookDidChangeCallback(ABAddressBookRef addressBook, CFDictionaryRef 
 	[self applicationDidFinishLaunching:application];
 	
 	addressBookRef = ABAddressBookCreate();
-	[self synchronizeAddressBook];
-	ABAddressBookRegisterExternalChangeCallback(addressBookRef, addressBookDidChangeCallback, NULL);
+	synchronizeAddressBook(addressBookRef, NULL, NULL);
+	ABAddressBookRegisterExternalChangeCallback(addressBookRef, synchronizeAddressBook, NULL);
     return YES;
 }
 
 - (void)synchronizeAddressBook
 {
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	//GROUPS
 	NSArray *groupRefsExternal = [(NSArray *)ABAddressBookCopyArrayOfAllGroups(addressBookRef) autorelease];
 	
@@ -106,22 +109,40 @@ void addressBookDidChangeCallback(ABAddressBookRef addressBook, CFDictionaryRef 
 			[newPerson setValue:personID forKey:@"identifier"];
 			[newPerson release];
 		}
-		
 		[personID release];
 	}
 	
-	for (NSManagedObject *personInternal in personsInternal)
-	{
-		if (![personIDsExternal containsObject:[personInternal valueForKey:@"identifier"]]) [[self managedObjectContext] deleteObject:personInternal];
-	}
+	for (NSManagedObject *personInternal in personsInternal) if (![personIDsExternal containsObject:[personInternal valueForKey:@"identifier"]]) [[self managedObjectContext] deleteObject:personInternal];
 	
 	//GROUP MEMBERS
-	//...
+	[fetchRequest setEntity:[NSEntityDescription entityForName:@"Group" inManagedObjectContext:[self managedObjectContext]]];
+	NSArray *groups = [[self managedObjectContext] executeFetchRequest:fetchRequest error:nil];
+	[fetchRequest setEntity:[NSEntityDescription entityForName:@"Person" inManagedObjectContext:[self managedObjectContext]]];
+	NSArray *persons = [[self managedObjectContext] executeFetchRequest:fetchRequest error:nil];
+	NSMutableDictionary *personsByID = [NSMutableDictionary dictionaryWithCapacity:[persons count]];
+	
+	for (NSManagedObject *person in persons)
+	{
+		[(Record *)person name];
+		[personsByID setObject:person forKey:[person valueForKey:@"identifier"]];
+	}
+	
+	for (NSManagedObject *group in groups)
+	{
+		[(Record *)group name];
+		[[group mutableSetValueForKey:@"persons"] removeAllObjects];
+		NSArray *personRefs = (NSArray *)ABGroupCopyArrayOfAllMembers(ABAddressBookGetGroupWithRecordID(addressBookRef, [[group valueForKey:@"identifier"] intValue]));
+		
+		for (id personRef in personRefs)
+		{
+			[[group mutableSetValueForKey:@"persons"] addObject:[personsByID objectForKey:[NSNumber numberWithInt:ABRecordGetRecordID((ABRecordRef)personRef)]]];
+		}
+		[personRefs release];
+	}
 	
 	[self saveContext];
 	if (ABAddressBookHasUnsavedChanges(addressBookRef)) ABAddressBookSave(addressBookRef, NULL);
-	
-	CFRelease(addressBookRef);
+	[pool drain];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -166,7 +187,7 @@ void addressBookDidChangeCallback(ABAddressBookRef addressBook, CFDictionaryRef 
 	[managedObjectContext release];
 	[managedObjectModel release];
 	[persistentStoreCoordinator release];
-	ABAddressBookUnregisterExternalChangeCallback(addressBookRef, addressBookDidChangeCallback, NULL);
+	ABAddressBookUnregisterExternalChangeCallback(addressBookRef, synchronizeAddressBook, NULL);
 	CFRelease(addressBookRef);
 	
     [super dealloc];

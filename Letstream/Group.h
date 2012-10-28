@@ -3,7 +3,7 @@
 //  Letstream
 //
 //  Created by Hans Andersson on 11/06/14.
-//  Copyright (c) 2011 Ultramentem & Vigorware. All rights reserved.
+//  Copyright (c) 2011 Hans Andersson. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -14,9 +14,10 @@
 
 @interface Group : Record {}
 
-+ (Group *)groupWithName:(NSString *)name inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
++ (Group *)groupWithName:(NSString *)name insertIntoManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 
 @property (nonatomic, retain) NSNumber *identifier;
 @property (nonatomic, retain) NSSet *searches;
+@property (nonatomic, readonly, copy) NSSet *persons;
 
 @end

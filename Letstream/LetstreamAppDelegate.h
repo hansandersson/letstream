@@ -3,13 +3,13 @@
 //  Letstream
 //
 //  Created by Hans Andersson on 11/06/10.
-//  Copyright 2011 Ultramentem & Vigorware. All rights reserved.
+//  Copyright 2011 Hans Andersson. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import <AddressBook/AddressBook.h>
 
-void addressBookDidChangeCallback(ABAddressBookRef addressBook, CFDictionaryRef info, void *context);
+void synchronizeAddressBook(ABAddressBookRef addressBook, CFDictionaryRef info, void *context);
 
 @interface LetstreamAppDelegate : NSObject <UIApplicationDelegate>
 {

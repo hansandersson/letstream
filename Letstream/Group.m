@@ -3,7 +3,7 @@
 //  Letstream
 //
 //  Created by Hans Andersson on 11/06/14.
-//  Copyright (c) 2011 Ultramentem & Vigorware. All rights reserved.
+//  Copyright (c) 2011 Hans Andersson. All rights reserved.
 //
 
 #import "Group.h"
@@ -11,10 +11,12 @@
 #import <AddressBook/AddressBook.h>
 
 @implementation Group
+
 @dynamic identifier;
 @dynamic searches;
+@dynamic persons;
 
-+ (Group *)groupWithName:(NSString *)name inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
++ (Group *)groupWithName:(NSString *)name insertIntoManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
 {
 	CFErrorRef errorRef = NULL;
 	ABAddressBookRef addressBookRef = ABAddressBookCreate();
@@ -49,6 +51,20 @@
 	[newGroup setValue:[NSNumber numberWithInt:newGroupID] forKey:@"identifier"];
 	
 	return [newGroup autorelease];
+}
+
+- (ABRecordRef)recordRef
+{
+	if (!recordRefInitialized)
+	{
+		ABAddressBookRef addressBookRef = ABAddressBookCreate();
+		recordRef = ABAddressBookGetGroupWithRecordID(addressBookRef, [(NSNumber *)[self valueForKey:@"identifier"] intValue]);
+		CFRetain(recordRef);
+		CFRelease(addressBookRef);
+		
+		recordRefInitialized = YES;
+	}
+	return recordRef;
 }
 
 @end

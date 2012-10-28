@@ -3,14 +3,18 @@
 //  Letstream
 //
 //  Created by Hans Andersson on 11/06/14.
-//  Copyright 2011 Ultramentem & Vigorware. All rights reserved.
+//  Copyright 2011 Hans Andersson. All rights reserved.
 //
+
+#import "Responder.h"
 
 #import "SearchDetailsViewController.h"
 #import "Group.h"
 #import "Tag.h"
 
 #import "PeoplePicker.h"
+#import "RegionPicker.h"
+#import "TimeframePicker.h"
 
 #import "SearchDetailsSection.h"
 
@@ -34,12 +38,26 @@
 		
 		error = nil;
 		[fetchRequest setEntity:[NSEntityDescription entityForName:@"Person" inManagedObjectContext:managedObjectContext]];
-		PeoplePicker *peoplePicker = [[PeoplePicker alloc] initWithPersonObjects:[managedObjectContext executeFetchRequest:fetchRequest error:&error]];
+		PeoplePicker *peoplePicker = [[[PeoplePicker alloc] initWithPersonObjects:[managedObjectContext executeFetchRequest:fetchRequest error:&error]] autorelease];
 		if (error) NSLog(@"%@", error);
 		
 		[[peoplePicker navigationItem] setRightBarButtonItem:[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(newGroup:)] autorelease]];
-		//SHOULD SET TITLE VIEW TO A TEXTFIELD FOR NAMING
-		[[peoplePicker navigationItem] setTitleView:nil];
+		[peoplePicker setTitle:@"Create Group…"];
+		
+		
+		
+		NSString *placeholder = @"Group Name";
+		UITextField *nameField = [[UITextField alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+		[nameField setFont:[UIFont boldSystemFontOfSize:14.0f]];
+		[nameField setFrame:CGRectMake([nameField frame].origin.x, [nameField frame].origin.y, [nameField frame].size.width, 24.0f)];
+		[nameField setPlaceholder:placeholder];
+		[nameField setBorderStyle:UITextBorderStyleBezel];
+		[nameField setBackgroundColor:[UIColor whiteColor]];
+		[nameField setReturnKeyType:UIReturnKeyDone];
+		[nameField setDelegate:self];
+		[[peoplePicker navigationItem] setTitleView:nameField];
+		
+		[nameField release];
 		
 		[who setEditViewController:peoplePicker];
 		
@@ -50,12 +68,14 @@
 		
 		SearchDetailsSection *where = [[[SearchDetailsSection alloc] initWithTitle:@"Where" representedObjects:[NSArray array]] autorelease];
 		
-		//UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 0.0f, 216.0f)];
-		//[datePicker setDatePickerMode:UIDatePickerModeCountDownTimer];
-		//[datePicker setMinuteInterval:5];
+		RegionPicker *regionPicker = [[[RegionPicker alloc] init] autorelease];
+		[regionPicker setTitle:@"Select Area…"];
+		[where setEditViewController:regionPicker];
+		
+		TimeframePicker *timeframePicker = [[[TimeframePicker alloc] init] autorelease];
+		[timeframePicker setTitle:@"Select Timeframe(s)…"];
 		SearchDetailsSection *when = [[[SearchDetailsSection alloc] initWithTitle:@"When" representedObjects:[NSArray array]] autorelease];
-		//[[when editViews] addObject:datePicker];
-		//[datePicker release];
+		[when setEditViewController:timeframePicker];
 		
 		sections = [[NSArray alloc] initWithObjects:who, what, where, when, nil];
 	}
@@ -113,6 +133,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	if ([self navigationController]) [[self navigationController] setDelegate:self];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -130,6 +151,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+	[[self navigationController] setToolbarHidden:YES animated:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -161,19 +183,13 @@
 
 - (id)representedObjectForIndexPath:(NSIndexPath *)indexPath
 {
-	if (!([indexPath section] < [[self sections] count])) return nil;
+	if (!((NSUInteger)[indexPath section] < [[self sections] count])) return nil;
 	
 	SearchDetailsSection *section = [[self sections] objectAtIndex:[indexPath section]];
 	
-	if (!([indexPath row] < [[section representedObjects] count])) return nil;
+	if (!((NSUInteger)[indexPath row] < [[section representedObjects] count])) return nil;
 	
 	return [[section representedObjects] objectAtIndex:[indexPath row]];
-}
-
-- (UIView *)editViewForIndexPath:(NSIndexPath *)indexPath
-{
-	SearchDetailsSection *section = [[self sections] objectAtIndex:[indexPath section]];
-	return [[section editViews] objectAtIndex:([indexPath row]-[[section representedObjects] count])];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section { return [(SearchDetailsSection *)[[self sections] objectAtIndex:section] title]; }
@@ -191,8 +207,11 @@
 	{
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CELLTYPE] autorelease];
 		
-		if (CELLTYPE == CELLTYPE_EDIT) [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-		else [[cell textLabel] setTextColor:[UIColor darkTextColor]];
+		if (CELLTYPE == CELLTYPE_EDIT)
+		{
+			[[cell textLabel] setTextColor:[UIColor lightGrayColor]];
+			[cell setAccessoryType:UITableViewCellAccessoryDetailDisclosureButton];
+		}
 	}
 	
 	if (CELLTYPE != CELLTYPE_EDIT)
@@ -200,31 +219,9 @@
 		[[cell textLabel] setText:[[self representedObjectForIndexPath:indexPath] description]];
 		[cell setAccessoryType:[[self selectedObjects] containsObject:[self representedObjectForIndexPath:indexPath]] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone];
 	}
-	else
-	{
-		for (UIView *subview in [[cell contentView] subviews]) [subview removeFromSuperview];
-		
-		CGRect contentViewBounds = [[cell contentView] bounds];
-		
-		UIView *editView = [self editViewForIndexPath:indexPath];
-		
-		const CGSize padding = CGSizeMake(10.0f, 10.0f);
-		[editView setFrame:CGRectMake(padding.width, padding.height, contentViewBounds.size.width - 2.0f*padding.width, [editView frame].size.height)];
-		[editView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-		[editView setTag:[indexPath section]];
-		
-		[[cell contentView] addSubview:editView];
-	}
+	else [[cell textLabel] setText:[[(SearchDetailsSection *)[[self sections] objectAtIndex:[indexPath section]] editViewController] title]];
 
     return cell;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	if ([self representedObjectForIndexPath:indexPath]) return [tableView rowHeight];
-	
-	UIView *editView = [self editViewForIndexPath:indexPath];
-	return 23.0f + [editView frame].size.height;
 }
 
 
@@ -306,11 +303,32 @@
 
 - (void)newGroup:(id)sender
 {
-	//UIBarButtonItem *saveButton = (UIBarButtonItem *)sender;
+	PeoplePicker *peoplePicker = (PeoplePicker *)[[self navigationController] topViewController];
+	
+	SearchDetailsSection *section = [[self sections] objectAtIndex:0];
+	NSIndexPath *newObjectIndexPath = [NSIndexPath indexPathForRow:[section rowsCount] inSection:0];
+	
+	Group *newGroup = [Group groupWithName:[(UITextView *)[[peoplePicker navigationItem] titleView] text] insertIntoManagedObjectContext:managedObjectContext];
+	
+	[[section representedObjects] addObject:newGroup];
+	
 	[[self navigationController] popToViewController:self animated:YES];
+	[(UITextView *)[[peoplePicker navigationItem] titleView] setText:nil];
+	
+	[(UITableView *)[self view] insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[newObjectIndexPath row] inSection:[newObjectIndexPath section]]] withRowAnimation:UITableViewRowAnimationTop];
+	
+	[(UITableView *)[self view] reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 #pragma mark - Table view delegate
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+{
+	[tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+	UIViewController *editViewController = [(SearchDetailsSection *)[[self sections] objectAtIndex:[indexPath section]] editViewController];
+	if ([[editViewController toolbarItems] count] > 0) [[self navigationController] setToolbarHidden:NO animated:YES];
+	[[self navigationController] pushViewController:editViewController animated:YES];
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -328,8 +346,17 @@
 			[selectedObjects removeObject:[self representedObjectForIndexPath:indexPath]];
 			[[tableView cellForRowAtIndexPath:indexPath] setAccessoryType:UITableViewCellAccessoryNone];
 		}
+		[tableView deselectRowAtIndexPath:indexPath animated:YES];
 	}
-	[tableView deselectRowAtIndexPath:indexPath animated:YES];
+	else [self tableView:tableView accessoryButtonTappedForRowWithIndexPath:indexPath];
+}
+
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+	
+	if ([[[[self navigationController] topViewController] view] findAndResignFirstResponder]) return;
+	else if ([[[[[self navigationController] topViewController] navigationItem] titleView] findAndResignFirstResponder]) return;
+	NSLog(@"firstResponder not found");
 }
 
 @end

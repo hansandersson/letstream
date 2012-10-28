@@ -3,13 +3,13 @@
 //  Letstream
 //
 //  Created by Hans Andersson on 11/06/14.
-//  Copyright 2011 Ultramentem & Vigorware. All rights reserved.
+//  Copyright 2011 Hans Andersson. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
 
-@interface SearchDetailsViewController : UITableViewController <UITextFieldDelegate>
+@interface SearchDetailsViewController : UITableViewController <UITextFieldDelegate, UINavigationControllerDelegate>
 {
 	NSMutableSet *selectedObjects;
 }

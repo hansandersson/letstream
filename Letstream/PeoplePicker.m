@@ -3,7 +3,7 @@
 //  Letstream
 //
 //  Created by Hans Andersson on 11/06/15.
-//  Copyright 2011 Ultramentem & Vigorware. All rights reserved.
+//  Copyright 2011 Hans Andersson. All rights reserved.
 //
 
 #import "PeoplePicker.h"
@@ -16,7 +16,7 @@
 
 - (id)initWithPersonObjects:(NSArray *)initPersonObjects
 {
-	if ((self = [super initWithNibName:@"PeoplePicker" bundle:nil])) personObjects = [initPersonObjects copy];
+	if ((self = [super initWithNibName:@"PeoplePicker" bundle:nil])) personObjects = [[Person sortedPersonObjects:initPersonObjects] retain];
 	return self;
 }
 
@@ -36,7 +36,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	[self setClearsSelectionOnViewWillAppear:NO];
+	[self setClearsSelectionOnViewWillAppear:YES];	
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+	[(NSMutableArray *)[self selectedObjects] removeAllObjects];
+	[(UITableView *)[self view] reloadData];
+	[super viewWillAppear:YES];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -51,19 +58,23 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"PeoplePickerCell";
     
     UITableViewCell *cell;;
-    if (!(cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier])) cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+    if (!(cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier])) cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
     
-  	[[cell textLabel] setText:[(Person *)[personObjects objectAtIndex:[indexPath row]] description]];
+	Person *person = (Person *)[personObjects objectAtIndex:[indexPath row]];
+	
+  	[[cell textLabel] setText:[person name]];
+	[[cell detailTextLabel] setText:[[[person groups] allObjects] componentsJoinedByString:@", "]];
+	[cell setAccessoryType:[selectedObjects containsObject:person] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone];
     
     return cell;
 }
 
 - (id)representedObjectForIndexPath:(NSIndexPath *)indexPath
 {
-	if (!([indexPath row] < [personObjects count])) return nil;
+	if (!((NSUInteger)[indexPath row] < [personObjects count])) return nil;
 	
 	return [personObjects objectAtIndex:[indexPath row]];
 }
@@ -72,18 +83,15 @@
 {
     // Navigation logic may go here. Create and push another view controller.
 	
-	if ([self representedObjectForIndexPath:indexPath])
+	if (![[self selectedObjects] containsObject:[self representedObjectForIndexPath:indexPath]])
 	{
-		if (![[self selectedObjects] containsObject:[self representedObjectForIndexPath:indexPath]])
-		{
-			[(NSMutableArray *)selectedObjects addObject:[self representedObjectForIndexPath:indexPath]];
-			[[tableView cellForRowAtIndexPath:indexPath] setAccessoryType:UITableViewCellAccessoryCheckmark];
-		}
-		else
-		{
-			[(NSMutableArray *)selectedObjects removeObject:[self representedObjectForIndexPath:indexPath]];
-			[[tableView cellForRowAtIndexPath:indexPath] setAccessoryType:UITableViewCellAccessoryNone];
-		}
+		[(NSMutableArray *)selectedObjects addObject:[self representedObjectForIndexPath:indexPath]];
+		[[tableView cellForRowAtIndexPath:indexPath] setAccessoryType:UITableViewCellAccessoryCheckmark];
+	}
+	else
+	{
+		[(NSMutableArray *)selectedObjects removeObject:[self representedObjectForIndexPath:indexPath]];
+		[[tableView cellForRowAtIndexPath:indexPath] setAccessoryType:UITableViewCellAccessoryNone];
 	}
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 }

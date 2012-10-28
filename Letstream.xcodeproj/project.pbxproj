@@ -14,8 +14,16 @@
 		3A0A342C13A7F64F007FFFFB /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A0A342B13A7F64F007FFFFB /* Person.m */; };
 		3A0A343213A7F650007FFFFB /* Group.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A0A343113A7F650007FFFFB /* Group.m */; };
 		3A0A343613A7F766007FFFFB /* Record.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A0A343513A7F766007FFFFB /* Record.m */; };
+		3A0A758913AA6BE200F18D7E /* RegionPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A0A758713AA6BE200F18D7E /* RegionPicker.m */; };
+		3A0A758A13AA6BE200F18D7E /* RegionPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A0A758813AA6BE200F18D7E /* RegionPicker.xib */; };
+		3A0A758C13AA6E8600F18D7E /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A0A758B13AA6E8600F18D7E /* MapKit.framework */; };
+		3A0A758E13AA6ED700F18D7E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A0A758D13AA6ED700F18D7E /* CoreLocation.framework */; };
 		3A20ECCA13A24C85009BC127 /* SearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A20ECC813A24C85009BC127 /* SearchTableViewController.m */; };
 		3A20ECCB13A24C85009BC127 /* SearchTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A20ECC913A24C85009BC127 /* SearchTableViewController.xib */; };
+		3A42A7F913AD2E29007B3E07 /* Responder.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A42A7F813AD2E29007B3E07 /* Responder.m */; };
+		3A42A80313AD46CD007B3E07 /* TimeframePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A42A80113AD46CD007B3E07 /* TimeframePicker.m */; };
+		3A42A80413AD46CD007B3E07 /* TimeframePicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A42A80213AD46CD007B3E07 /* TimeframePicker.xib */; };
+		3A42A80613AD4720007B3E07 /* Timeframe.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3A42A80513AD4720007B3E07 /* Timeframe.plist */; };
 		3A53A06213A91755001972AD /* SurveyTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A53A06013A91755001972AD /* SurveyTableViewController.m */; };
 		3A53A06313A91755001972AD /* SurveyTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A53A06113A91755001972AD /* SurveyTableViewController.xib */; };
 		3A53A06D13A91EAD001972AD /* PeoplePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A53A06B13A91EAD001972AD /* PeoplePicker.m */; };
@@ -49,9 +57,20 @@
 		3A0A343113A7F650007FFFFB /* Group.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Group.m; sourceTree = "<group>"; };
 		3A0A343413A7F766007FFFFB /* Record.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Record.h; sourceTree = "<group>"; };
 		3A0A343513A7F766007FFFFB /* Record.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Record.m; sourceTree = "<group>"; };
+		3A0A758613AA6BE200F18D7E /* RegionPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegionPicker.h; sourceTree = "<group>"; };
+		3A0A758713AA6BE200F18D7E /* RegionPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegionPicker.m; sourceTree = "<group>"; };
+		3A0A758813AA6BE200F18D7E /* RegionPicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegionPicker.xib; sourceTree = "<group>"; };
+		3A0A758B13AA6E8600F18D7E /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		3A0A758D13AA6ED700F18D7E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		3A20ECC713A24C85009BC127 /* SearchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SearchTableViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A20ECC813A24C85009BC127 /* SearchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SearchTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A20ECC913A24C85009BC127 /* SearchTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchTableViewController.xib; sourceTree = "<group>"; };
+		3A42A7F713AD2E28007B3E07 /* Responder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Responder.h; sourceTree = "<group>"; };
+		3A42A7F813AD2E29007B3E07 /* Responder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Responder.m; sourceTree = "<group>"; };
+		3A42A80013AD46CD007B3E07 /* TimeframePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeframePicker.h; sourceTree = "<group>"; };
+		3A42A80113AD46CD007B3E07 /* TimeframePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeframePicker.m; sourceTree = "<group>"; };
+		3A42A80213AD46CD007B3E07 /* TimeframePicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimeframePicker.xib; sourceTree = "<group>"; };
+		3A42A80513AD4720007B3E07 /* Timeframe.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Timeframe.plist; sourceTree = "<group>"; };
 		3A53A05F13A91755001972AD /* SurveyTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurveyTableViewController.h; sourceTree = "<group>"; };
 		3A53A06013A91755001972AD /* SurveyTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurveyTableViewController.m; sourceTree = "<group>"; };
 		3A53A06113A91755001972AD /* SurveyTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SurveyTableViewController.xib; sourceTree = "<group>"; };
@@ -88,6 +107,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A0A758E13AA6ED700F18D7E /* CoreLocation.framework in Frameworks */,
+				3A0A758C13AA6E8600F18D7E /* MapKit.framework in Frameworks */,
 				3A0A342913A7D3BD007FFFFB /* AddressBookUI.framework in Frameworks */,
 				3A0A342713A7D3B7007FFFFB /* AddressBook.framework in Frameworks */,
 				3A56FD7813A2296400B87EEC /* UIKit.framework in Frameworks */,
@@ -146,6 +167,13 @@
 				3A53A06A13A91EAD001972AD /* PeoplePicker.h */,
 				3A53A06B13A91EAD001972AD /* PeoplePicker.m */,
 				3A53A06C13A91EAD001972AD /* PeoplePicker.xib */,
+				3A0A758613AA6BE200F18D7E /* RegionPicker.h */,
+				3A0A758713AA6BE200F18D7E /* RegionPicker.m */,
+				3A0A758813AA6BE200F18D7E /* RegionPicker.xib */,
+				3A42A80013AD46CD007B3E07 /* TimeframePicker.h */,
+				3A42A80113AD46CD007B3E07 /* TimeframePicker.m */,
+				3A42A80213AD46CD007B3E07 /* TimeframePicker.xib */,
+				3A42A80513AD4720007B3E07 /* Timeframe.plist */,
 			);
 			name = Interface;
 			sourceTree = "<group>";
@@ -170,6 +198,8 @@
 		3A56FD7613A2296400B87EEC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3A0A758D13AA6ED700F18D7E /* CoreLocation.framework */,
+				3A0A758B13AA6E8600F18D7E /* MapKit.framework */,
 				3A0A342813A7D3BD007FFFFB /* AddressBookUI.framework */,
 				3A0A342613A7D3B7007FFFFB /* AddressBook.framework */,
 				3A56FD7713A2296400B87EEC /* UIKit.framework */,
@@ -183,6 +213,8 @@
 		3A56FD7F13A2296400B87EEC /* Letstream */ = {
 			isa = PBXGroup;
 			children = (
+				3A42A7F713AD2E28007B3E07 /* Responder.h */,
+				3A42A7F813AD2E29007B3E07 /* Responder.m */,
 				3A56FD8013A2296400B87EEC /* Supporting Files */,
 				3A56FD8E13A2296500B87EEC /* iPhone */,
 				3A56FD9513A2296500B87EEC /* iPad */,
@@ -295,6 +327,9 @@
 				3ADB9B7D13A90AC00050BF7C /* Settings.bundle in Resources */,
 				3A53A06313A91755001972AD /* SurveyTableViewController.xib in Resources */,
 				3A53A06E13A91EAD001972AD /* PeoplePicker.xib in Resources */,
+				3A0A758A13AA6BE200F18D7E /* RegionPicker.xib in Resources */,
+				3A42A80413AD46CD007B3E07 /* TimeframePicker.xib in Resources */,
+				3A42A80613AD4720007B3E07 /* Timeframe.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,6 +354,9 @@
 				3ADB9B7513A885AB0050BF7C /* SearchDetailsSection.m in Sources */,
 				3A53A06213A91755001972AD /* SurveyTableViewController.m in Sources */,
 				3A53A06D13A91EAD001972AD /* PeoplePicker.m in Sources */,
+				3A0A758913AA6BE200F18D7E /* RegionPicker.m in Sources */,
+				3A42A7F913AD2E29007B3E07 /* Responder.m in Sources */,
+				3A42A80313AD46CD007B3E07 /* TimeframePicker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -440,12 +478,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Letstream/Letstream-Prefix.pch";
 				INFOPLIST_FILE = "Letstream/Letstream-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -454,11 +496,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Letstream/Letstream-Prefix.pch";
 				INFOPLIST_FILE = "Letstream/Letstream-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
